@@ -1,0 +1,1 @@
+enum Platform { gitlab }
