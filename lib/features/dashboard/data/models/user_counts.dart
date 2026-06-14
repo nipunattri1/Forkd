@@ -3,10 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_counts.freezed.dart';
 part 'user_counts.g.dart';
 
-@Freezed(unionKey: 'platformType')
+@Freezed(unionKey: 'platformType', toJson: true)
 sealed class UserCounts with _$UserCounts {
   const UserCounts._();
-  @JsonSerializable(fieldRename: FieldRename.snake)
+  // @JsonSerializable(fieldRename: FieldRename.snake)
   factory UserCounts.gitlab({
     required int mergeRequests,
     required int assignedIssues,

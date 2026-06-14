@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forkd/core/networking/networking_helpers.dart';
+import 'package:forkd/dependency_injection.dart';
 import 'package:forkd/features/auth/domain/entities/account_entity.dart';
 import 'package:forkd/features/auth/domain/usecase/add_gitlab_oauth_account_usecase.dart';
 import 'package:forkd/features/auth/domain/usecase/add_gitlab_token_account_usecase.dart';
@@ -93,7 +94,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _HydarateAuth event,
     Emitter<AuthState> emit,
   ) async {
-    print('hyrating');
+    di<Logger>().d('hyrating');
     final result = await hydrateAuthUseCase.call();
     // Uri.https(result.activeAccount?.domain ?? '').;
     NetworkingHelpers.configureDio(
@@ -146,12 +147,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _SetActiveAccountEvent event,
     Emitter<AuthState> emit,
   ) async {
-    print('setting active accout');
+    di<Logger>().d('setting active accout');
     final res = await setActiveForkdAccountUsecase.call(event.account);
     await res.fold(
       (e) async => emit(const AuthState.error(error: "Couldn't Set Account")),
       (_) async {
-        print('set Success');
+        di<Logger>().d('set Success');
         final result = await hydrateAuthUseCase.call();
         emit(
           AuthState.data(
@@ -173,7 +174,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await res.fold(
       (e) async => emit(const AuthState.error(error: 'Coudn;t add account')),
       (_) async {
-        print('set Success');
+        di<Logger>().d('set Success');
         final result = await hydrateAuthUseCase.call();
         emit(
           AuthState.data(

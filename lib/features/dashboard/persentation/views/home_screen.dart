@@ -93,8 +93,8 @@ class DashboardScreen extends StatelessWidget {
         return state.map(
           data: (value) => RefreshIndicator(
             onRefresh: () async {
-              final bloc = context.read<DashboardBloc>();
-              bloc.add(const DashboardBlocEvent.reloadData());
+              final bloc = context.read<DashboardBloc>()
+                ..add(const DashboardBlocEvent.reloadData());
               await bloc.stream.firstWhere(
                 (state) => state.map(
                   data: (_) => true,
@@ -112,7 +112,7 @@ class DashboardScreen extends StatelessWidget {
                     builder: (context, authState) {
                       return authState.maybeMap(
                         data: (value) {
-                          final account = value.activeAccount;
+                          // final account = value.activeAccount;
                           // if (account is GitlabAccountEntity) {
                           //   // create a user header
                           //   return ;

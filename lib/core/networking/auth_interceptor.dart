@@ -173,7 +173,7 @@ class AuthInterceptor extends Interceptor {
   ) async {
     try {
       requestOptions.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
-      final response = await dio.fetch(requestOptions);
+      final response = await dio.fetch<dynamic>(requestOptions);
       handler.resolve(response);
     } on DioException catch (retryErr) {
       handler.next(retryErr);

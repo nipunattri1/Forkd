@@ -7,6 +7,8 @@ class ApiGitlabUser {
   ApiGitlabUser();
   factory ApiGitlabUser.fromJson(Map<String, dynamic> json) =>
       _$ApiGitlabUserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ApiGitlabUserToJson(this);
   int? id;
   String? username;
   String? name;

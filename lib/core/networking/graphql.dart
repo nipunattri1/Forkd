@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 @Deprecated('old service needs to be migrated')
 class Graphql {
-  // TODO: Migrate Graphql to functional err handling
+  //TODO(nipunattri1): Migrate Graphql to functional err handling.
   static Future<dynamic> query(String query, {String? token}) async {
     final res = await http
         .post(

@@ -173,8 +173,8 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                   title: const Text('Gitlab'),
                   leading: const Icon(Symbols.fork_right_sharp),
                   subtitle: const Text('Gitlab.com'),
-                  onTap: () {
-                    showGitlabDetailsDialog(context);
+                  onTap: () async {
+                    await showGitlabDetailsDialog(context);
                   },
                 ),
               ],
@@ -191,7 +191,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
 
     final formKey = GlobalKey<FormState>();
 
-    return showDialog(
+    return showDialog<dynamic>(
       context: context,
       builder: (dialogCtx) {
         return AlertDialog(

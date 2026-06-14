@@ -5,22 +5,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'account.freezed.dart';
 part 'account.g.dart';
 
-@freezed
+@Freezed(toJson: true)
 sealed class AccountModel with _$AccountModel {
-  // @JsonSerializable(includeIfNull: false)
-  // factory AccountModel({
-  //   required String platform,
-  //   required String domain,
-  //   required String token,
-  //   required String login,
-  //   required String avatarUrl,
-  //   int? gitlabId, // For GitLab
-  //   String? appPassword, // For Bitbucket
-  //   String? accountId, // For Bitbucket
-  // }) = _Account;
   const AccountModel._();
 
-  @JsonSerializable(createToJson: true)
   factory AccountModel.github({
     required String tokenHash,
     required String login,
@@ -28,7 +16,6 @@ sealed class AccountModel with _$AccountModel {
     @Default('github.com') String domain,
   }) = GithubAccModel;
 
-  @JsonSerializable(createToJson: true)
   factory AccountModel.gitlab({
     required String tokenHash,
     required String username,

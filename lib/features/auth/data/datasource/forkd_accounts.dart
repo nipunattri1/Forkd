@@ -30,7 +30,7 @@ class ForkdAccountsDataSource {
         .map((account) => AccountModel.fromEntity(account).toJson())
         .toList();
     await prefs.setString(StorageKeys.accounts, json.encode(jsonData));
-    _logger.t('Accounts list successfully written to disk.');
+    _logger.d('Accounts list successfully written to disk.');
   }
 
   Future<void> _saveActiveAccount(AccountEntity? account) async {
@@ -63,9 +63,11 @@ class ForkdAccountsDataSource {
       return hash;
     }
 
-    account = account.copyWith(tokenHash: hash.getOrElse((e) => 'nullToken'));
+    final updatedAccount = account.copyWith(
+      tokenHash: hash.getOrElse((e) => 'nullToken'),
+    );
     final accounts = await getallAccounts;
-    accounts.add(account);
+    accounts.add(updatedAccount);
 
     try {
       await _saveAccountsList(accounts);
@@ -75,10 +77,10 @@ class ForkdAccountsDataSource {
         _logger.i(
           'First application account detected. Auto-promoting to primary active profile.',
         );
-        await _saveActiveAccount(account);
-        _inMemoryActiveAccount = account;
+        await _saveActiveAccount(updatedAccount);
+        _inMemoryActiveAccount = updatedAccount;
       }
-    } on Exception catch (e, _) {
+    } on Exception catch (e) {
       _logger.e(
         'Critical failure during account ingestion/disk operations: $e',
       );
@@ -119,7 +121,7 @@ class ForkdAccountsDataSource {
 
   Future<AccountEntity?> get getActiveAccount async {
     if (_inMemoryActiveAccount != null) {
-      _logger.v('Active account retrieved from fast in-memory cache.');
+      _logger.t('Active account retrieved from fast in-memory cache.');
       return _inMemoryActiveAccount;
     }
 
@@ -140,7 +142,7 @@ class ForkdAccountsDataSource {
       ).toEntity();
       _inMemoryActiveAccount = activeAccount;
       return activeAccount;
-    } catch (err) {
+    } on Exception catch (err) {
       _logger.e(
         'Failed to parse active account configuration. Data might be corrupted or outdated: $err',
       );
@@ -150,7 +152,7 @@ class ForkdAccountsDataSource {
 
   Future<List<AccountEntity>> get getallAccounts async {
     if (_inMemoryAccounts != null) {
-      _logger.v(
+      _logger.t(
         'Accounts master list fetched from in-memory cache (${_inMemoryAccounts!.length} items).',
       );
       return _inMemoryAccounts!;
@@ -181,7 +183,7 @@ class ForkdAccountsDataSource {
         'Successfully cached ${accountsList.length} application accounts into working memory.',
       );
       return accountsList;
-    } catch (err) {
+    } on Exception catch (err) {
       _logger.e(
         'Parse failure occurred while unmarshalling master accounts list payload: $err',
       );
@@ -192,7 +194,7 @@ class ForkdAccountsDataSource {
   Future<bool> get isLogedIn async {
     final list = await getallAccounts;
     final logStatus = list.isNotEmpty;
-    _logger.v(
+    _logger.t(
       'Login state sanity valuation executed. Result status: $logStatus',
     );
     return logStatus;
@@ -223,7 +225,7 @@ class ForkdAccountsDataSource {
         await _saveActiveAccount(null);
         _inMemoryActiveAccount = null;
       }
-    } on Exception catch (e, _) {
+    } on Exception catch (e) {
       _logger.e(
         'An error compromised the transaction workflow during profile cleanup execution: $e',
       );

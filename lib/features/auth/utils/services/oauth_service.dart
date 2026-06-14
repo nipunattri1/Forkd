@@ -14,7 +14,7 @@ import 'package:logger/logger.dart';
 import 'package:nanoid/nanoid.dart';
 
 class OauthService {
-  StreamSubscription? _linkSub;
+  StreamSubscription<Uri>? _linkSub;
   Completer<Uri?>? _callbackCompleter;
   final _appLinks = AppLinks();
 
@@ -67,7 +67,7 @@ class OauthService {
 
     if (launch.isLeft()) {
       _logger.e('OAuth aborting: Failed to launch external browser URI.');
-      _cleanup();
+      await _cleanup();
       return left(AuthError.launchError());
     }
 
@@ -82,7 +82,7 @@ class OauthService {
       },
     );
 
-    _cleanup();
+    await _cleanup();
 
     if (callbackUri == null) {
       _logger.e('OAuth tracking halted: Callback URI is null.');
@@ -157,9 +157,9 @@ class OauthService {
     );
   }
 
-  void _cleanup() {
+  Future<void> _cleanup() async {
     _logger.d('Executing OAuth Service resource teardown and cleanup.');
-    _linkSub?.cancel();
+    await _linkSub?.cancel();
     _linkSub = null;
     _callbackCompleter = null;
   }

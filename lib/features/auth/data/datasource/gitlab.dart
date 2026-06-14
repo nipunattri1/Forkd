@@ -9,13 +9,12 @@ import 'package:http/http.dart' as http;
 
 class GitlabDataSource {
   Future<AccountModel> loginWithToken(String domain, String token) async {
-    domain = domain.trim();
-    token = token.trim();
+    final tokenTrimmed = token.trim();
 
-    final uri = Uri.https(domain, '/api/v4/user');
+    final uri = Uri.https(domain.trim(), '/api/v4/user');
     final res = await http.get(
       uri,
-      headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+      headers: {HttpHeaders.authorizationHeader: 'Bearer $tokenTrimmed'},
     );
 
     if (res.statusCode != 200) {
@@ -35,7 +34,7 @@ class GitlabDataSource {
 
     final user = ApiGitlabUser.fromJson(info);
     return AccountModel.gitlab(
-      tokenHash: token,
+      tokenHash: tokenTrimmed,
       username: user.username!,
       avatarUrl: user.avatarUrl!,
       gitlabId: user.id ?? -1,
@@ -52,9 +51,7 @@ class GitlabDataSource {
     required String codeVerifier,
     required String redirectUri,
   }) async {
-    domain = domain.trim();
-
-    final tokenUri = Uri.https(domain, '/oauth/token');
+    final tokenUri = Uri.https(domain.trim(), '/oauth/token');
     final body = {
       'client_id': gitlabClientId,
       'code': code,

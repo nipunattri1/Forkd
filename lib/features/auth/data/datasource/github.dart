@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -7,7 +9,7 @@ import 'package:forkd/features/auth/data/models/account.dart';
 import 'package:http/http.dart' as http;
 
 class GithubDataSource {
-  // TODO: imporve quality here
+  // TODO(nipunattri1): imporve quality here
   Future<String> exchangeTokens({
     required String code,
     required String oAuthState,

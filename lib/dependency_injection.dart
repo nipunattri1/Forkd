@@ -39,20 +39,21 @@ Future<void> configureDependencies() async {
 }
 
 void _configureBlocs() {
-  di.registerSingleton<AuthBloc>(
-    AuthBloc(
-      // addGithubAccountUseCase: di(),
-      addGitlabOAuthAccountUseCase: di(),
-      removeForkdAccountUseCase: di(),
-      hydrateAuthUseCase: di(),
-      setActiveForkdAccountUsecase: di(),
-      addGitlabTokenAccountUsecase: di(),
-      logger: di(),
-    ),
-  );
-  di.registerSingleton(
-    DashboardBloc(getDashboardDataUsecase: di<GetDashboardDataUsecase>()),
-  );
+  di
+    ..registerSingleton<AuthBloc>(
+      AuthBloc(
+        // addGithubAccountUseCase: di(),
+        addGitlabOAuthAccountUseCase: di(),
+        removeForkdAccountUseCase: di(),
+        hydrateAuthUseCase: di(),
+        setActiveForkdAccountUsecase: di(),
+        addGitlabTokenAccountUsecase: di(),
+        logger: di(),
+      ),
+    )
+    ..registerSingleton(
+      DashboardBloc(getDashboardDataUsecase: di<GetDashboardDataUsecase>()),
+    );
 }
 
 void _configureUseCases() {
@@ -101,29 +102,30 @@ void _configureUseCases() {
 }
 
 void _configureRepsitories() {
-  di.registerSingleton<GitlabAuthRepo>(
-    GitlabAuthRepoImp(
-      gitlabDataSource: di<GitlabDataSource>(),
-      logger: di<Logger>(),
-    ),
-  );
-  // di.registerSingleton<GithubAuthRepo>(
-  //   GithubAuthRepoImp(
-  //     dataSource: di<GithubDataSource>(),
-  //     appLinks: di<AppLinks>(),
-  //   ),
-  // );
-  di.registerSingleton<ForkdAuthRepo>(
-    ForkdAuthRepoImp(
-      accountsDataSource: di<ForkdAccountsDataSource>(),
-      tokenDataSource: di<ForkdTokenService>(),
-    ),
-  );
-  di.registerSingleton<DashboardGitlabRepsitory>(
-    DashboardGitlabRepsitoryImp(
-      gitlabDatasource: di<DashboardGitlabDatasource>(),
-    ),
-  );
+  di
+    ..registerSingleton<GitlabAuthRepo>(
+      GitlabAuthRepoImp(
+        gitlabDataSource: di<GitlabDataSource>(),
+        logger: di<Logger>(),
+      ),
+    )
+    // di.registerSingleton<GithubAuthRepo>(
+    //   GithubAuthRepoImp(
+    //     dataSource: di<GithubDataSource>(),
+    //     appLinks: di<AppLinks>(),
+    //   ),
+    // );
+    ..registerSingleton<ForkdAuthRepo>(
+      ForkdAuthRepoImp(
+        accountsDataSource: di<ForkdAccountsDataSource>(),
+        tokenDataSource: di<ForkdTokenService>(),
+      ),
+    )
+    ..registerSingleton<DashboardGitlabRepsitory>(
+      DashboardGitlabRepsitoryImp(
+        gitlabDatasource: di<DashboardGitlabDatasource>(),
+      ),
+    );
 }
 
 void _configureDataSources() {
