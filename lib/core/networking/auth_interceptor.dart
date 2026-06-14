@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_ignore
+
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
@@ -33,7 +35,12 @@ class AuthInterceptor extends Interceptor {
     if (_rateLimitReset != null) {
       final delay = _rateLimitReset!.difference(DateTime.now().toUtc());
       if (delay.inSeconds > 0) {
-        if (kDebugMode) print('Delaying request: ${delay.inSeconds}s');
+        if (kDebugMode) {
+          print(
+            'Delaying request: ${delay.inSeconds}s',
+          ); // ignore: document_ignores
+        }
+        // ignore: inference_failure_on_instance_creation
         await Future.delayed(delay);
       } else {
         _rateLimitReset = null;
@@ -102,7 +109,7 @@ class AuthInterceptor extends Interceptor {
         final refreshSucceeded = await pendingRefresh.future;
         if (!refreshSucceeded) return handler.next(err);
 
-        return await _attachTokenAndRetry(uuid, err, handler);
+        return _attachTokenAndRetry(uuid, err, handler);
       }
 
       final completer = Completer<bool>();

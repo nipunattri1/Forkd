@@ -15,7 +15,6 @@ class ForkdTheme {
     return ThemeData.from(
       colorScheme: ColorScheme.fromSeed(
         seedColor: Colors.purple,
-        brightness: Brightness.light,
       ),
       textTheme: textTheme,
     );

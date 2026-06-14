@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:app_links/app_links.dart';
+
+import 'package:forkd/features/auth/data/datasource/gitlab.dart';
 import 'package:forkd/features/auth/data/models/token.dart';
 import 'package:forkd/features/auth/domain/entities/account_entity.dart';
 import 'package:forkd/features/auth/domain/repositories/gitlab_auth_repo.dart';
-import 'package:forkd/features/auth/data/datasource/gitlab.dart';
 import 'package:forkd/features/auth/utils/services/oauth_service.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:logger/logger.dart';
@@ -11,7 +11,6 @@ import 'package:logger/logger.dart';
 class GitlabAuthRepoImp implements GitlabAuthRepo {
   GitlabAuthRepoImp({
     required GitlabDataSource gitlabDataSource,
-    AppLinks? appLinks,
     required this.logger,
   }) : _dataSource = gitlabDataSource;
   //  _appLinks = appLinks ?? AppLinks();
@@ -42,7 +41,7 @@ class GitlabAuthRepoImp implements GitlabAuthRepo {
     required String domain,
   }) async {
     final res = await _oauthService.call(domain, onCodeRecived: _onCodeRecived);
-    return res.fold((e) => left(Exception()), (data) => right(data));
+    return res.fold((e) => left(Exception()), right);
   }
 
   Future<(AccountEntity, TokenModel)> _onCodeRecived({

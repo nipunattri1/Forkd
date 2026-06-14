@@ -12,7 +12,9 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (ctx) => di<AuthBloc>()..add(AuthEvent.hydrate())),
+        BlocProvider(
+          create: (ctx) => di<AuthBloc>()..add(const AuthEvent.hydrate()),
+        ),
       ],
       child: const MyApp(),
     ),

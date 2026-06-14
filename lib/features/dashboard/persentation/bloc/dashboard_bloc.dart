@@ -13,7 +13,7 @@ part 'dashboard_bloc.freezed.dart';
 
 class DashboardBloc extends Bloc<DashboardBlocEvent, DashboardBlocState> {
   DashboardBloc({required this.getDashboardDataUsecase})
-    : super(DashboardBlocState.loading()) {
+    : super(const DashboardBlocState.loading()) {
     on<_LoadDataEvent>(_doadData);
   }
 
@@ -23,7 +23,7 @@ class DashboardBloc extends Bloc<DashboardBlocEvent, DashboardBlocState> {
     _LoadDataEvent event,
     Emitter<DashboardBlocState> emit,
   ) async {
-    emit(DashboardBlocState.loading());
+    emit(const DashboardBlocState.loading());
     final val = await getDashboardDataUsecase.call(NoParams());
     print('something');
     val.fold(

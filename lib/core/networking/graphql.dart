@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -23,7 +25,7 @@ class Graphql {
     final data = json.decode(res.body);
 
     if (data['errors'] != null) {
-      throw data['errors'][0]['message'];
+      throw Exception(data['errors'][0]['message'] as String);
     }
 
     return data['data'];

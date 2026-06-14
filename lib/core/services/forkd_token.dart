@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:nanoid/nanoid.dart';
 
 class ForkdTokenService {
-  final _storage = FlutterSecureStorage();
+  static const _storage = FlutterSecureStorage();
 
   String _genTokenHash() => nanoid(32);
 
@@ -34,7 +34,9 @@ class ForkdTokenService {
     try {
       final token = await _storage.read(key: tokenHash);
       if (token == null) throw Exception('token not avaiable in storage');
-      final tokenData = TokenModel.fromJson(jsonDecode(token));
+      final tokenData = TokenModel.fromJson(
+        jsonDecode(token) as Map<String, dynamic>,
+      );
       return Either.right(tokenData.accessToken);
     } on Exception catch (e, _) {
       return Either.left(e);
@@ -45,7 +47,9 @@ class ForkdTokenService {
     try {
       final token = await _storage.read(key: tokenHash);
       if (token == null) throw Exception('token not avaiable in storage');
-      final tokenData = TokenModel.fromJson(jsonDecode(token));
+      final tokenData = TokenModel.fromJson(
+        jsonDecode(token) as Map<String, dynamic>,
+      );
       return Either.right(tokenData);
     } on Exception catch (e, _) {
       return Either.left(e);
@@ -61,7 +65,7 @@ class ForkdTokenService {
     return Either.right(null);
   }
 
-  Map<String, bool> _isRefrshing = {};
+  final Map<String, bool> _isRefrshing = {};
 
   bool isAccountRefreshing(String platform) {
     return _isRefrshing[platform] ?? false;
@@ -71,10 +75,12 @@ class ForkdTokenService {
 
   void unsetAccountRefreshing(String uuid) => _isRefrshing[uuid] = false;
 
-  /// Fetches new token for the platform, takes [AccountEntity] and [TokenModel].
+  /// Fetches new token for the platform,
+  /// takes [AccountEntity] and [TokenModel].
   /// function starts a new isolate to do so;
   /// also updates the storage and returns the new account & token.
   ///
+  // ignore: lines_longer_than_80_chars
   /// User needs to be logged out in case of no refresh token or error for the server.
   Future<Either<NetworkError, TokenModel>> refreshToken(
     AccountEntity account,
@@ -107,10 +113,10 @@ class ForkdTokenService {
 
   // TODO: switch to dio
   Future<TokenModel> _refreshGitlabToken(String domain, String token) async {
-    domain = domain.trim();
+    final domainlocal = domain.trim();
 
-    final tokenUri = Uri.https(domain, '/oauth/token');
-    final redirectUri = '$appUriScheme://$appUriBase/auth/gitlab';
+    final tokenUri = Uri.https(domainlocal, '/oauth/token');
+    const redirectUri = '$appUriScheme://$appUriBase/auth/gitlab';
 
     final body = {
       'client_id': gitlabClientId,

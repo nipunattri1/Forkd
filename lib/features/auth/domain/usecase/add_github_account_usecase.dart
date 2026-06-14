@@ -1,7 +1,7 @@
 import 'package:forkd/core/usecase/usecase.dart';
 import 'package:forkd/features/auth/domain/repositories/forkd_auth_repo.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:forkd/features/auth/domain/repositories/github_auth_repo.dart';
+import 'package:fpdart/fpdart.dart';
 
 class AddGithubAccountUseCase extends UseCase<void, NoParams> {
   AddGithubAccountUseCase({

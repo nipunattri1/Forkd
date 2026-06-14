@@ -11,7 +11,7 @@ class DashboardGitlabRepsitoryImp implements DashboardGitlabRepsitory {
   Future<Either<Exception, DashboardEntity>> dashboardData() async {
     final val = await gitlabDatasource.getUserCounts();
     return val.fold(
-      (e) => left(e),
+      left,
       (data) => right(
         DashboardEntity(
           mergeRequests: data.mergeRequests,

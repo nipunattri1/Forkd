@@ -7,6 +7,6 @@ class SetActiveForkdAccountUsecase {
   final ForkdAuthRepo forkdAuthRepo;
 
   Future<Either<Exception, void>> call(AccountEntity account) async {
-    return await forkdAuthRepo.setActiveAccount(account);
+    return forkdAuthRepo.setActiveAccount(account);
   }
 }

@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:forkd/features/auth/data/datasource/forkd_accounts.dart';
 import 'package:forkd/dependency_injection.dart';
+import 'package:forkd/features/auth/data/datasource/forkd_accounts.dart';
 import 'package:forkd/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:forkd/features/auth/presentation/views/login.dart';
 import 'package:forkd/features/dashboard/persentation/views/home_screen.dart';
 import 'package:go_router/go_router.dart';
-import 'package:forkd/features/auth/presentation/views/login.dart';
 import 'package:logger/logger.dart';
 
 Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
@@ -14,14 +14,13 @@ Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
   final isGoingToLogin = state.matchedLocation == '/login';
   final isHandlingAuth = state.matchedLocation.startsWith('/auth');
 
-  final logger = di<Logger>();
-
-  logger.d({
-    'info': 'Auth Guard State Check',
-    'isLoggedIn': isLogedIn,
-    'isGoingToLogin': isGoingToLogin,
-    'isHandlingAuth': isHandlingAuth,
-  });
+  final logger = di<Logger>()
+    ..d({
+      'info': 'Auth Guard State Check',
+      'isLoggedIn': isLogedIn,
+      'isGoingToLogin': isGoingToLogin,
+      'isHandlingAuth': isHandlingAuth,
+    });
 
   if (!isLogedIn) {
     if (isHandlingAuth) {
@@ -44,8 +43,8 @@ Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
   return null;
 }
 
-class StreamToListenable extends ChangeNotifier {
-  StreamToListenable(List<Stream> streams) {
+class StreamToListenable<T> extends ChangeNotifier {
+  StreamToListenable(List<Stream<T>> streams) {
     subscriptions = [];
     for (final e in streams) {
       final s = e.asBroadcastStream().listen(_tt);
@@ -53,17 +52,17 @@ class StreamToListenable extends ChangeNotifier {
     }
     notifyListeners();
   }
-  late final List<StreamSubscription> subscriptions;
+  late final List<StreamSubscription<T>> subscriptions;
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
     for (final e in subscriptions) {
-      e.cancel();
+      await e.cancel();
     }
     super.dispose();
   }
 
-  void _tt(event) => notifyListeners();
+  void _tt(dynamic event) => notifyListeners();
 }
 
 final router = GoRouter(
@@ -71,7 +70,10 @@ final router = GoRouter(
   redirect: _authGuard,
   refreshListenable: StreamToListenable([di<AuthBloc>().stream]),
   routes: [
-    GoRoute(path: '/login', builder: (context, state) => AddAccountScreen()),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const AddAccountScreen(),
+    ),
     GoRoute(
       path: '/auth/gitlab',
       builder: (context, state) {
@@ -89,6 +91,9 @@ final router = GoRouter(
         );
       },
     ),
-    GoRoute(path: '/', builder: (context, state) => HomeScreen(), routes: []),
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const HomeScreen(),
+    ),
   ],
 );

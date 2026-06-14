@@ -30,8 +30,14 @@
       ],
       "devDependencies": [
         "flutter_lints",
-        "flutter_test"
+        "flutter_test",
+        "very_good_analysis"
       ]
+    },
+    {
+      "name": "very_good_analysis",
+      "version": "10.2.0",
+      "dependencies": []
     },
     {
       "name": "flutter_lints",

@@ -41,7 +41,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
   String _sanitizeDomain(String raw) {
     var value = raw.trim();
     // Remove protocol prefix (http:// or https://)
-    value = value.replaceFirst(RegExp(r'^https?://'), '');
+    value = value.replaceFirst(RegExp('^https?://'), '');
     // Remove path, query string, and fragment — keep only the host
     value = value.split('/').first.split('?').first.split('#').first;
     // Normalise to lowercase
@@ -90,17 +90,20 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
             ),
           ),
           SliverPadding(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsetsGeometry.symmetric(
+              horizontal: 16,
+              vertical: 16,
+            ),
             sliver: BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
                 return ForkdList.sliver(
                   tileData: [
                     ...state.map(
                       loading: (_) => [
-                        ForkdListTileData.custom(
+                        const ForkdListTileData.custom(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8,
                             ),
                             child: LinearProgressIndicator(),
                           ),
@@ -128,8 +131,8 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                       error: (err) => [],
                     ),
                     ForkdListTileData(
-                      title: Text('Add new Account'),
-                      leading: Icon(Symbols.add),
+                      title: const Text('Add new Account'),
+                      leading: const Icon(Symbols.add),
                       onTap: () => choosePlatformBottomSheet(context),
                     ),
                   ],
@@ -167,9 +170,9 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                 //   },
                 // ),
                 ForkdListTileData(
-                  title: Text('Gitlab'),
-                  leading: Icon(Symbols.fork_right_sharp),
-                  subtitle: Text('Gitlab.com'),
+                  title: const Text('Gitlab'),
+                  leading: const Icon(Symbols.fork_right_sharp),
+                  subtitle: const Text('Gitlab.com'),
                   onTap: () {
                     showGitlabDetailsDialog(context);
                   },
@@ -286,7 +289,9 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                       onPressed: () {
                         Navigator.of(dialogCtx).pop();
                         authBloc.add(
-                          AuthEvent.addGitlabOAuthAccount(domain: 'gitlab.com'),
+                          const AuthEvent.addGitlabOAuthAccount(
+                            domain: 'gitlab.com',
+                          ),
                         );
                       },
                       style: theme.textButtonTheme.style,

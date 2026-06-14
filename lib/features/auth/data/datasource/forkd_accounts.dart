@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:forkd/core/services/forkd_token.dart';
 import 'package:forkd/core/networking/networking_helpers.dart';
+import 'package:forkd/core/services/forkd_token.dart';
+import 'package:forkd/core/utils/utils.dart';
 import 'package:forkd/dependency_injection.dart';
 import 'package:forkd/features/auth/data/models/account.dart';
 import 'package:forkd/features/auth/data/models/token.dart';
 import 'package:forkd/features/auth/domain/entities/account_entity.dart';
-import 'package:forkd/core/utils/utils.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +19,7 @@ class ForkdAccountsDataSource {
   AccountEntity? _inMemoryActiveAccount;
 
   // Retrieve the logger instance via dependency injection
-  final _logger = di<Logger>();
+  final Logger _logger = di<Logger>();
 
   Future<void> _saveAccountsList(List<AccountEntity> accounts) async {
     _logger.d(
@@ -30,7 +30,7 @@ class ForkdAccountsDataSource {
         .map((account) => AccountModel.fromEntity(account).toJson())
         .toList();
     await prefs.setString(StorageKeys.accounts, json.encode(jsonData));
-    _logger.v('Accounts list successfully written to disk.');
+    _logger.t('Accounts list successfully written to disk.');
   }
 
   Future<void> _saveActiveAccount(AccountEntity? account) async {
@@ -135,7 +135,9 @@ class ForkdAccountsDataSource {
     }
 
     try {
-      final activeAccount = AccountModel.fromJson(json.decode(str)).toEntity();
+      final activeAccount = AccountModel.fromJson(
+        json.decode(str) as Map<String, dynamic>,
+      ).toEntity();
       _inMemoryActiveAccount = activeAccount;
       return activeAccount;
     } catch (err) {
@@ -166,9 +168,12 @@ class ForkdAccountsDataSource {
         return [];
       }
 
-      final List<dynamic> decodedList = json.decode(str);
+      final decodedList = json.decode(str) as List<dynamic>;
       final accountsList = decodedList
-          .map((item) => AccountModel.fromJson(item).toEntity())
+          .map(
+            (item) =>
+                AccountModel.fromJson(item as Map<String, dynamic>).toEntity(),
+          )
           .toList();
 
       _inMemoryAccounts = accountsList;
@@ -209,7 +214,7 @@ class ForkdAccountsDataSource {
       _logger.d(
         'Purging secure credential keys map targeting token checksum hash.',
       );
-      tokenService.removeToken(account.tokenHash);
+      await tokenService.removeToken(account.tokenHash);
 
       if (activeAccount == account) {
         _logger.w(

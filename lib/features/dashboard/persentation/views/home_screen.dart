@@ -3,14 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forkd/core/common/strings.dart';
 import 'package:forkd/core/extensions/theme_context.dart';
 import 'package:forkd/core/widgets/forkd_scaffold.dart';
-import 'package:forkd/core/utils/utils.dart';
+import 'package:forkd/core/widgets/forkd_sliver_list.dart';
 import 'package:forkd/dependency_injection.dart';
-import 'package:forkd/features/auth/domain/entities/account_entity.dart';
 import 'package:forkd/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:forkd/features/dashboard/domain/entities/dash_metrics_entity.dart';
 import 'package:forkd/features/dashboard/persentation/bloc/dashboard_bloc.dart';
 import 'package:forkd/features/dashboard/persentation/widgets/metrics_widget_list.dart';
-import 'package:forkd/core/widgets/forkd_sliver_list.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -161,8 +159,8 @@ class DashboardScreen extends StatelessWidget {
                 const SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8.0,
+                      horizontal: 16,
+                      vertical: 8,
                     ),
                     child: Divider(),
                   ),
@@ -170,8 +168,8 @@ class DashboardScreen extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 16.0,
+                      horizontal: 16,
+                      vertical: 16,
                     ),
                     child: Text(
                       'Quick Navigation',
@@ -183,9 +181,9 @@ class DashboardScreen extends StatelessWidget {
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.only(
-                    left: 16.0,
-                    right: 16.0,
-                    bottom: 24.0,
+                    left: 16,
+                    right: 16,
+                    bottom: 24,
                   ),
                   sliver: ForkdList.sliver(
                     tileData: [
@@ -244,7 +242,7 @@ class DashboardScreen extends StatelessWidget {
                 SliverFillRemaining(
                   child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

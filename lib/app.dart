@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forkd/core/router/router.dart';
 import 'package:forkd/core/theme/forkd_theme.dart';
 import 'package:forkd/core/widgets/forkd_toasts.dart';
 import 'package:forkd/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:forkd/core/router/router.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
           routerConfig: router,
           theme: ForkdTheme.lightTheme,
           darkTheme: ForkdTheme.darkTheme,
-          themeMode: ThemeMode.system,
         );
       },
       listener: (context, state) {

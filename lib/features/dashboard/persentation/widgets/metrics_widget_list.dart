@@ -4,7 +4,7 @@ import 'package:forkd/core/utils/constants.dart';
 import 'package:forkd/features/dashboard/domain/entities/dash_metrics_entity.dart';
 
 class MetricsWidgetList extends StatelessWidget {
-  const MetricsWidgetList({super.key, required this.metrics});
+  const MetricsWidgetList({required this.metrics, super.key});
   final List<DashMetricsEntity> metrics;
 
   @override

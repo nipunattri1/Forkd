@@ -1,9 +1,8 @@
 import 'package:app_links/app_links.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:forkd/features/auth/data/datasource/gitlab.dart';
 import 'package:forkd/core/services/forkd_token.dart';
 import 'package:forkd/features/auth/data/datasource/forkd_accounts.dart';
+import 'package:forkd/features/auth/data/datasource/gitlab.dart';
 import 'package:forkd/features/auth/data/repostiory/forkd_auth_repo_imp.dart';
 import 'package:forkd/features/auth/data/repostiory/gitlab_auth_repo_imp.dart';
 import 'package:forkd/features/auth/domain/repositories/forkd_auth_repo.dart';
@@ -21,12 +20,11 @@ import 'package:forkd/features/dashboard/data/repositories/dashboard_gitlab_reps
 import 'package:forkd/features/dashboard/domain/repositories/dashboard_gitlab_repsitory.dart';
 import 'package:forkd/features/dashboard/domain/usecases/get_gitlab_dashboard_data_usecase.dart';
 import 'package:forkd/features/dashboard/persentation/bloc/dashboard_bloc.dart';
-
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-final di = GetIt.instance;
+final GetIt di = GetIt.instance;
 
 Future<void> configureDependencies() async {
   _configureCore();
@@ -66,47 +64,46 @@ void _configureUseCases() {
   //     authRepo: di<ForkdAuthRepo>(),
   //   ),
   // );
-  di.registerLazySingleton(
-    () => AddGitlabOAuthAccountUseCase(
-      gitlabAuthRepo: di<GitlabAuthRepo>(),
-      forkdAuthRepo: di<ForkdAuthRepo>(),
-      logger: di<Logger>(),
-    ),
-  );
-  di.registerLazySingleton(
-    () => AddGitlabTokenAccountUsecase(
-      gitlabAuthRepo: di<GitlabAuthRepo>(),
-      forkdAuthRepo: di<ForkdAuthRepo>(),
-    ),
-  );
-  di.registerLazySingleton(
-    () => RemoveForkdAccountUseCase(forkdAuthRepo: di<ForkdAuthRepo>()),
-  );
-  di.registerLazySingleton(
-    () => HydrateAuthUseCase(forkdAuthRepo: di<ForkdAuthRepo>()),
-  );
-  di.registerLazySingleton(
-    () => AddForkdAccountUsercase(forkdAuthRepo: di<ForkdAuthRepo>()),
-  );
-  di.registerLazySingleton(
-    () => SetActiveForkdAccountUsecase(forkdAuthRepo: di<ForkdAuthRepo>()),
-  );
-  di.registerLazySingleton(
-    () => IsLoggedInUseCase(forkdAuthRepo: di<ForkdAuthRepo>()),
-  );
-
-  di.registerLazySingleton(
-    () => GetDashboardDataUsecase(
-      gitlabRepsitory: di<DashboardGitlabRepsitory>(),
-    ),
-  );
+  di
+    ..registerLazySingleton(
+      () => AddGitlabOAuthAccountUseCase(
+        gitlabAuthRepo: di<GitlabAuthRepo>(),
+        forkdAuthRepo: di<ForkdAuthRepo>(),
+        logger: di<Logger>(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => AddGitlabTokenAccountUsecase(
+        gitlabAuthRepo: di<GitlabAuthRepo>(),
+        forkdAuthRepo: di<ForkdAuthRepo>(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => RemoveForkdAccountUseCase(forkdAuthRepo: di<ForkdAuthRepo>()),
+    )
+    ..registerLazySingleton(
+      () => HydrateAuthUseCase(forkdAuthRepo: di<ForkdAuthRepo>()),
+    )
+    ..registerLazySingleton(
+      () => AddForkdAccountUsercase(forkdAuthRepo: di<ForkdAuthRepo>()),
+    )
+    ..registerLazySingleton(
+      () => SetActiveForkdAccountUsecase(forkdAuthRepo: di<ForkdAuthRepo>()),
+    )
+    ..registerLazySingleton(
+      () => IsLoggedInUseCase(forkdAuthRepo: di<ForkdAuthRepo>()),
+    )
+    ..registerLazySingleton(
+      () => GetDashboardDataUsecase(
+        gitlabRepsitory: di<DashboardGitlabRepsitory>(),
+      ),
+    );
 }
 
 void _configureRepsitories() {
   di.registerSingleton<GitlabAuthRepo>(
     GitlabAuthRepoImp(
       gitlabDataSource: di<GitlabDataSource>(),
-      appLinks: di<AppLinks>(),
       logger: di<Logger>(),
     ),
   );
@@ -130,51 +127,39 @@ void _configureRepsitories() {
 }
 
 void _configureDataSources() {
-  di.registerSingleton<ForkdAccountsDataSource>(
-    ForkdAccountsDataSource(tokenService: di<ForkdTokenService>()),
-  );
-
-  // di.registerSingleton<GithubDataSource>(GithubDataSource());
-
-  di.registerSingleton<GitlabDataSource>(GitlabDataSource());
-
-  di.registerSingleton<DashboardGitlabDatasource>(DashboardGitlabDatasource());
+  di
+    ..registerSingleton<ForkdAccountsDataSource>(
+      ForkdAccountsDataSource(tokenService: di<ForkdTokenService>()),
+    )
+    // di.registerSingleton<GithubDataSource>(GithubDataSource());
+    ..registerSingleton<GitlabDataSource>(GitlabDataSource())
+    ..registerSingleton<DashboardGitlabDatasource>(DashboardGitlabDatasource());
 }
 
 void _configureCore() {
-  di.registerSingleton<ForkdTokenService>(ForkdTokenService());
-
-  di.registerSingleton(AppLinks());
-  di.registerLazySingleton<Logger>(
-    () => Logger(
-      printer: PrettyPrinter(
-        methodCount: 2, // Number of method calls to display
-        errorMethodCount: 8, // Number of method calls if stacktrace is provided
-        lineLength: 120, // Width of the output lines
-        colors: true, // Colorful log messages
-        printEmojis: false, // Print an emoji for each log type
-      ),
-    ),
-  );
-  di.registerSingleton<Dio>(
-    Dio()
-      ..interceptors.add(
-        PrettyDioLogger(
-          requestHeader: true,
-          requestBody: true,
-          responseBody: true,
-          responseHeader: false,
-          error: true,
-          compact: true,
-          maxWidth: 90,
-          enabled: kDebugMode,
-          filter: (options, args) {
-            if (options.path.contains('/posts')) {
-              return false;
-            }
-            return !args.isResponse || !args.hasUint8ListData;
-          },
+  di
+    ..registerSingleton<ForkdTokenService>(ForkdTokenService())
+    ..registerSingleton(AppLinks())
+    ..registerLazySingleton<Logger>(
+      () => Logger(
+        printer: PrettyPrinter(
+          printEmojis: false, // Print an emoji for each log type
         ),
       ),
-  );
+    )
+    ..registerSingleton<Dio>(
+      Dio()
+        ..interceptors.add(
+          PrettyDioLogger(
+            requestHeader: true,
+            requestBody: true,
+            filter: (options, args) {
+              if (options.path.contains('/posts')) {
+                return false;
+              }
+              return !args.isResponse || !args.hasUint8ListData;
+            },
+          ),
+        ),
+    );
 }

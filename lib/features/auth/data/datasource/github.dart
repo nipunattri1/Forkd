@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:forkd/core/networking/graphql.dart';
 import 'package:forkd/core/common/strings.dart';
+import 'package:forkd/core/networking/graphql.dart';
 import 'package:forkd/features/auth/data/models/account.dart';
 import 'package:http/http.dart' as http;
 

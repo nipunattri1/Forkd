@@ -5,10 +5,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'forkd_sliver_list.freezed.dart';
 
 class ForkdList extends StatelessWidget {
-  const ForkdList({super.key, required this.tileData, this.shrinkWrap = false});
+  const ForkdList({required this.tileData, super.key, this.shrinkWrap = false});
   const factory ForkdList.sliver({
-    Key? key,
     required List<ForkdListTileData> tileData,
+    Key? key,
   }) = _ForkdSliverList;
   final List<ForkdListTileData> tileData;
   final bool shrinkWrap;
@@ -30,10 +30,9 @@ class ForkdList extends StatelessWidget {
     final isBottom = index == tileData.length - 1;
     return Container(
       decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
         borderRadius: BorderRadius.vertical(
-          top: isTop ? Radius.circular(defaultRadius) : zeroRadius,
-          bottom: isBottom ? Radius.circular(defaultRadius) : zeroRadius,
+          top: isTop ? const Radius.circular(defaultRadius) : zeroRadius,
+          bottom: isBottom ? const Radius.circular(defaultRadius) : zeroRadius,
         ),
         border: Border(
           left: defaultBorderSide(ctx),
@@ -70,7 +69,7 @@ class ForkdList extends StatelessWidget {
 }
 
 class _ForkdSliverList extends ForkdList {
-  const _ForkdSliverList({Key? key, required super.tileData});
+  const _ForkdSliverList({required super.tileData, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +83,8 @@ class _ForkdSliverList extends ForkdList {
 @freezed
 sealed class ForkdListTileData with _$ForkdListTileData {
   factory ForkdListTileData({
-    Widget? leading,
     required Widget title,
+    Widget? leading,
     Widget? subtitle,
     Widget? trailing,
     VoidCallback? onTap,

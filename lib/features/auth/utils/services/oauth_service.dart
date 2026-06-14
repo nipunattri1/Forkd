@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:app_links/app_links.dart';
+import 'package:crypto/crypto.dart';
 import 'package:forkd/core/common/errors.dart';
 import 'package:forkd/core/common/strings.dart';
 import 'package:forkd/core/utils/utils.dart';
@@ -11,7 +12,6 @@ import 'package:forkd/features/auth/domain/entities/account_entity.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:logger/logger.dart';
 import 'package:nanoid/nanoid.dart';
-import 'package:crypto/crypto.dart';
 
 class OauthService {
   StreamSubscription? _linkSub;
@@ -19,7 +19,7 @@ class OauthService {
   final _appLinks = AppLinks();
 
   // Retrieve the logger instance via dependency injection
-  final _logger = di<Logger>();
+  final Logger _logger = di<Logger>();
 
   Future<Either<AppError, (AccountEntity, TokenModel)>> call(
     String domain, {
@@ -34,7 +34,7 @@ class OauthService {
     _logger.i('Initiating OAuth flow for domain: $domain');
 
     // Identifiers
-    final redirectUri = '$appUriScheme://$appUriBase/auth/gitlab';
+    const redirectUri = '$appUriScheme://$appUriBase/auth/gitlab';
     final localOAuthState = nanoid(64);
     final codeVerifier = nanoid(64);
     final codeChallenge = base64UrlEncode(

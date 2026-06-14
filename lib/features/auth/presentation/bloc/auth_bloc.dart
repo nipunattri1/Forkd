@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forkd/core/networking/networking_helpers.dart';
 import 'package:forkd/features/auth/domain/entities/account_entity.dart';
 import 'package:forkd/features/auth/domain/usecase/add_gitlab_oauth_account_usecase.dart';
@@ -9,11 +10,11 @@ import 'package:forkd/features/auth/domain/usecase/hydrate_auth_usecase.dart';
 import 'package:forkd/features/auth/domain/usecase/remove_forkd_account_usecase.dart';
 import 'package:forkd/features/auth/domain/usecase/set_active_forkd_account_usecase.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+
+part 'auth_bloc.freezed.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
-part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
@@ -24,7 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.setActiveForkdAccountUsecase,
     required this.addGitlabTokenAccountUsecase,
     required this.logger,
-  }) : super(AuthState.loading()) {
+  }) : super(const AuthState.loading()) {
     on<_AddGithubAccountEvent>(_addGithubAccount);
 
     on<_AddGitlabOAuthAccountEvent>(_addOAuthGitlab);
@@ -69,20 +70,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _RemoveForkdAccountEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(AuthState.loading());
+    emit(const AuthState.loading());
     final res = await removeForkdAccountUseCase(event.account);
-    res.match((_) => emit(AuthState.error(error: "Couldn't remove Account")), (
-      _,
-    ) async {
-      final result = await hydrateAuthUseCase.call();
+    res.match(
+      (_) => emit(const AuthState.error(error: "Couldn't remove Account")),
+      (
+        _,
+      ) async {
+        final result = await hydrateAuthUseCase.call();
 
-      emit(
-        AuthState.data(
-          accounts: result.accounts,
-          activeAccount: result.activeAccount,
-        ),
-      );
-    });
+        emit(
+          AuthState.data(
+            accounts: result.accounts,
+            activeAccount: result.activeAccount,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> _hydrateAuth(
@@ -119,7 +123,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await res.fold(
       (e) async {
         logger.e({'info': 'gitlab OAuth failed with error'}, error: e);
-        emit(AuthState.error(error: "Couldn't add Account"));
+        emit(const AuthState.error(error: "Couldn't add Account"));
       },
       (_) async {
         final result = await hydrateAuthUseCase.call();
@@ -145,7 +149,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     print('setting active accout');
     final res = await setActiveForkdAccountUsecase.call(event.account);
     await res.fold(
-      (e) async => emit(AuthState.error(error: "Couldn't Set Account")),
+      (e) async => emit(const AuthState.error(error: "Couldn't Set Account")),
       (_) async {
         print('set Success');
         final result = await hydrateAuthUseCase.call();
@@ -167,7 +171,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AddGitlabTokenAccountParams(token: event.token, domain: event.domain),
     );
     await res.fold(
-      (e) async => emit(AuthState.error(error: 'Coudn;t add account')),
+      (e) async => emit(const AuthState.error(error: 'Coudn;t add account')),
       (_) async {
         print('set Success');
         final result = await hydrateAuthUseCase.call();

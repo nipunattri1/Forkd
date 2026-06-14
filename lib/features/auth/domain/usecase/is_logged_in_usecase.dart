@@ -5,6 +5,6 @@ class IsLoggedInUseCase {
   final ForkdAuthRepo forkdAuthRepo;
 
   Future<bool> call() async {
-    return await forkdAuthRepo.isLoggedIn;
+    return forkdAuthRepo.isLoggedIn;
   }
 }

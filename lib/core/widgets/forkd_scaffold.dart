@@ -3,8 +3,8 @@ import 'package:forkd/core/extensions/theme_context.dart';
 
 class ForkdScaffold extends StatelessWidget {
   const ForkdScaffold({
-    super.key,
     required this.body,
+    super.key,
     this.appabar,
     this.bottomNavigationbar,
   });
@@ -14,7 +14,7 @@ class ForkdScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: context.theme.scaffoldBackgroundColor,
       child: SafeArea(
         child: Scaffold(

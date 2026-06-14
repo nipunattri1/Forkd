@@ -3,8 +3,8 @@ import 'package:forkd/core/extensions/theme_context.dart';
 
 class ForkdTextField extends StatelessWidget {
   const ForkdTextField({
-    super.key,
     required this.hintText,
+    super.key,
     this.labelText,
     this.controller,
     this.prefixIcon,

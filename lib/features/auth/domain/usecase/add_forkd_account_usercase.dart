@@ -11,12 +11,12 @@ class AddForkdAccountUsercase extends UseCase<void, AddForkdAccountParams> {
 
   @override
   Future<Either<Exception, void>> call(AddForkdAccountParams params) async {
-    return await forkdAuthRepo.addAccount(params.account, params.token);
+    return forkdAuthRepo.addAccount(params.account, params.token);
   }
 }
 
 class AddForkdAccountParams extends Equatable {
-  AddForkdAccountParams({required this.account, required this.token});
+  const AddForkdAccountParams({required this.account, required this.token});
 
   final AccountEntity account;
   final TokenModel token;
