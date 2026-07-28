@@ -1,3 +1,36 @@
+# Tooling artifacts
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
 
+# Web specific
+.web/
+
+# Android specific
+.gradle/
+local.properties
+**/AndroidStudioPackages.spec
+*.apk
+*.aab
+*.bundle
+
+# iOS/macOS specific
+*.mode1v3
+*.mode2v3
+*.storyboardc
+*~.nib
+XCodeGenerated/
+Flutter/Flutter.podspec
+Flutter/Generated.xcconfig
+Flutter/flutter_export_environment.sh
+Flutter/ephemeral/
+OptionSelected.plist
+Pods/
+.symlinks/
+profile.json
+release.json
+DerivedData/
 # FVM Version Cache
 .fvm/

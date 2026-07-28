@@ -4,7 +4,6 @@ const String clientId = 'Iv23lieg5m9V7xYPKiSk';
 
 const String appUriScheme = 'app';
 const String appUriBase = 'nipunattri1.forkd';
-const String forkdUrl = 'git-touch-oauth.vercel.app';
 
 // github realted constants
 const String githubApiPrefix = 'api.github.com';

@@ -13,10 +13,8 @@ class GitlabAuthRepoImp implements GitlabAuthRepo {
     required GitlabDataSource gitlabDataSource,
     required this.logger,
   }) : _dataSource = gitlabDataSource;
-  //  _appLinks = appLinks ?? AppLinks();
 
   final GitlabDataSource _dataSource;
-  // final AppLinks _appLinks;
   final Logger logger;
   final _oauthService = OauthService();
 

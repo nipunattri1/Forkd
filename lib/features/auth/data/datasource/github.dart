@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_dynamic_calls
+// ignore_for_file: deprecated_member_use_from_same_package, avoid_dynamic_calls
 
 import 'dart:convert';
 import 'dart:io';
@@ -15,7 +15,7 @@ class GithubDataSource {
     required String oAuthState,
   }) async {
     final res = await http.post(
-      Uri.parse(forkdUrl),
+      Uri.parse('gihtub.com'),
       headers: {
         HttpHeaders.acceptHeader: 'application/json',
         HttpHeaders.contentTypeHeader: 'application/json',

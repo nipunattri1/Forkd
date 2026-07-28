@@ -121,13 +121,8 @@ class ForkdAccountsDataSource {
 
   Future<AccountEntity?> get getActiveAccount async {
     if (_inMemoryActiveAccount != null) {
-      _logger.t('Active account retrieved from fast in-memory cache.');
       return _inMemoryActiveAccount;
     }
-
-    _logger.d(
-      'In-memory lookup missed. Fetching active account from SharedPreferences disk state...',
-    );
     final prefs = await SharedPreferences.getInstance();
     final str = prefs.getString(StorageKeys.activeAccount);
 
