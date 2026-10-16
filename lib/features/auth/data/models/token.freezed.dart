@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'token.dart';
@@ -9,13 +9,14 @@ part of 'token.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$TokenModel {
 
- String get accessToken; String? get refreshToken; int? get expiresIn; int? get createdAt;
+
 /// Create a copy of TokenModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +27,21 @@ $TokenModelCopyWith<TokenModel> get copyWith => _$TokenModelCopyWithImpl<TokenMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TokenModel&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.expiresIn, expiresIn) || other.expiresIn == expiresIn)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  final _this = this as TokenModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TokenModel&&(identical(other.accessToken, _this.accessToken) || other.accessToken == _this.accessToken)&&(identical(other.refreshToken, _this.refreshToken) || other.refreshToken == _this.refreshToken)&&(identical(other.expiresIn, _this.expiresIn) || other.expiresIn == _this.expiresIn)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,accessToken,refreshToken,expiresIn,createdAt);
+int get hashCode {
+  final _this = this as TokenModel;
+  return Object.hash(runtimeType,_this.accessToken,_this.refreshToken,_this.expiresIn,_this.createdAt);
+}
 
 @override
 String toString() {
-  return 'TokenModel(accessToken: $accessToken, refreshToken: $refreshToken, expiresIn: $expiresIn, createdAt: $createdAt)';
+  final _this = this as TokenModel;
+  return 'TokenModel(accessToken: ${_this.accessToken}, refreshToken: ${_this.refreshToken}, expiresIn: ${_this.expiresIn}, createdAt: ${_this.createdAt})';
 }
 
 

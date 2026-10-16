@@ -17,12 +17,8 @@ class TokenModel with _$TokenModel {
 
   Map<String, dynamic> toJson() => _$TokenModelToJson(this);
 
-  @override
   final String accessToken;
-  @override
   final String? refreshToken;
-  @override
   final int? expiresIn;
-  @override
   final int? createdAt;
 }

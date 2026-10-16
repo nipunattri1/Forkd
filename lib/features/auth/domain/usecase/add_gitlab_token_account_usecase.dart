@@ -29,7 +29,7 @@ class AddGitlabTokenAccountUsecase
 
       await forkdAuthRepo.addAccount(account.$1, account.$2);
       return right(null);
-    } on Exception catch (e, _) {
+    } on Exception catch (e) {
       return left(e);
     }
   }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account.dart';
@@ -9,6 +9,7 @@ part of 'account.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 AccountModel _$AccountModelFromJson(
@@ -51,16 +52,21 @@ $AccountModelCopyWith<AccountModel> get copyWith => _$AccountModelCopyWithImpl<A
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountModel&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.domain, domain) || other.domain == domain));
+  final _this = this as AccountModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountModel&&(identical(other.tokenHash, _this.tokenHash) || other.tokenHash == _this.tokenHash)&&(identical(other.avatarUrl, _this.avatarUrl) || other.avatarUrl == _this.avatarUrl)&&(identical(other.domain, _this.domain) || other.domain == _this.domain));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,tokenHash,avatarUrl,domain);
+int get hashCode {
+  final _this = this as AccountModel;
+  return Object.hash(runtimeType,_this.tokenHash,_this.avatarUrl,_this.domain);
+}
 
 @override
 String toString() {
-  return 'AccountModel(tokenHash: $tokenHash, avatarUrl: $avatarUrl, domain: $domain)';
+  final _this = this as AccountModel;
+  return 'AccountModel(tokenHash: ${_this.tokenHash}, avatarUrl: ${_this.avatarUrl}, domain: ${_this.domain})';
 }
 
 
@@ -231,10 +237,10 @@ return gitlab(_that.tokenHash,_that.username,_that.name,_that.avatarUrl,_that.bi
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(createToJson: true)
 class GithubAccModel extends AccountModel {
-   GithubAccModel({required this.tokenHash, required this.login, required this.avatarUrl, this.domain = 'github.com', final  String? $type}): $type = $type ?? 'github',super._();
+   GithubAccModel({required this.tokenHash, required this.login, required this.avatarUrl, this.domain = 'github.com',  String? $type}): $type = $type ?? 'github',super._();
   factory GithubAccModel.fromJson(Map<String, dynamic> json) => _$GithubAccModelFromJson(json);
 
 @override final  String tokenHash;
@@ -259,16 +265,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GithubAccModel&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.login, login) || other.login == login)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.domain, domain) || other.domain == domain));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is GithubAccModel&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.login, login) || other.login == login)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.domain, domain) || other.domain == domain));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,tokenHash,login,avatarUrl,domain);
+int get hashCode {
+    return Object.hash(runtimeType,tokenHash,login,avatarUrl,domain);
+}
 
 @override
 String toString() {
-  return 'AccountModel.github(tokenHash: $tokenHash, login: $login, avatarUrl: $avatarUrl, domain: $domain)';
+    return 'AccountModel.github(tokenHash: $tokenHash, login: $login, avatarUrl: $avatarUrl, domain: $domain)';
 }
 
 
@@ -310,10 +318,10 @@ as String,
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(createToJson: true)
 class GitlabAccModel extends AccountModel {
-   GitlabAccModel({required this.tokenHash, required this.username, required this.name, required this.avatarUrl, required this.bio, required this.gitlabId, required this.accessLevel, this.domain = 'gitlab.com', final  String? $type}): $type = $type ?? 'gitlab',super._();
+   GitlabAccModel({required this.tokenHash, required this.username, required this.name, required this.avatarUrl, required this.bio, required this.gitlabId, required this.accessLevel, this.domain = 'gitlab.com',  String? $type}): $type = $type ?? 'gitlab',super._();
   factory GitlabAccModel.fromJson(Map<String, dynamic> json) => _$GitlabAccModelFromJson(json);
 
 @override final  String tokenHash;
@@ -342,16 +350,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GitlabAccModel&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.username, username) || other.username == username)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.gitlabId, gitlabId) || other.gitlabId == gitlabId)&&(identical(other.accessLevel, accessLevel) || other.accessLevel == accessLevel)&&(identical(other.domain, domain) || other.domain == domain));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is GitlabAccModel&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.username, username) || other.username == username)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.gitlabId, gitlabId) || other.gitlabId == gitlabId)&&(identical(other.accessLevel, accessLevel) || other.accessLevel == accessLevel)&&(identical(other.domain, domain) || other.domain == domain));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,tokenHash,username,name,avatarUrl,bio,gitlabId,accessLevel,domain);
+int get hashCode {
+    return Object.hash(runtimeType,tokenHash,username,name,avatarUrl,bio,gitlabId,accessLevel,domain);
+}
 
 @override
 String toString() {
-  return 'AccountModel.gitlab(tokenHash: $tokenHash, username: $username, name: $name, avatarUrl: $avatarUrl, bio: $bio, gitlabId: $gitlabId, accessLevel: $accessLevel, domain: $domain)';
+    return 'AccountModel.gitlab(tokenHash: $tokenHash, username: $username, name: $name, avatarUrl: $avatarUrl, bio: $bio, gitlabId: $gitlabId, accessLevel: $accessLevel, domain: $domain)';
 }
 
 

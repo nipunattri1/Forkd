@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'auth_bloc.dart';
@@ -9,6 +9,7 @@ part of 'auth_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -19,14 +20,14 @@ mixin _$AuthEvent implements DiagnosticableTreeMixin {
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthEvent'))
     ;
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthEvent);
 }
 
 
@@ -35,7 +36,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthEvent()';
+    return 'AuthEvent()';
 }
 
 
@@ -214,14 +215,14 @@ class _AddGithubAccountEvent with DiagnosticableTreeMixin implements AuthEvent {
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthEvent.addGithubOAuthAccount'))
     ;
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddGithubAccountEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddGithubAccountEvent);
 }
 
 
@@ -230,7 +231,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthEvent.addGithubOAuthAccount()';
+    return 'AuthEvent.addGithubOAuthAccount()';
 }
 
 
@@ -257,23 +258,25 @@ _$AddGitlabOAuthAccountEventCopyWith<_AddGitlabOAuthAccountEvent> get copyWith =
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthEvent.addGitlabOAuthAccount'))
     ..add(DiagnosticsProperty('domain', domain));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddGitlabOAuthAccountEvent&&(identical(other.domain, domain) || other.domain == domain));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddGitlabOAuthAccountEvent&&(identical(other.domain, domain) || other.domain == domain));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,domain);
+int get hashCode {
+    return Object.hash(runtimeType,domain);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthEvent.addGitlabOAuthAccount(domain: $domain)';
+    return 'AuthEvent.addGitlabOAuthAccount(domain: $domain)';
 }
 
 
@@ -330,23 +333,25 @@ _$AddGitlabTokenAccountEventCopyWith<_AddGitlabTokenAccountEvent> get copyWith =
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthEvent.addGitlabTokenAccount'))
     ..add(DiagnosticsProperty('token', token))..add(DiagnosticsProperty('domain', domain));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddGitlabTokenAccountEvent&&(identical(other.token, token) || other.token == token)&&(identical(other.domain, domain) || other.domain == domain));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddGitlabTokenAccountEvent&&(identical(other.token, token) || other.token == token)&&(identical(other.domain, domain) || other.domain == domain));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,token,domain);
+int get hashCode {
+    return Object.hash(runtimeType,token,domain);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthEvent.addGitlabTokenAccount(token: $token, domain: $domain)';
+    return 'AuthEvent.addGitlabTokenAccount(token: $token, domain: $domain)';
 }
 
 
@@ -398,14 +403,14 @@ class _HydarateAuth with DiagnosticableTreeMixin implements AuthEvent {
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthEvent.hydrate'))
     ;
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HydarateAuth);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _HydarateAuth);
 }
 
 
@@ -414,7 +419,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthEvent.hydrate()';
+    return 'AuthEvent.hydrate()';
 }
 
 
@@ -441,23 +446,25 @@ _$RemoveForkdAccountEventCopyWith<_RemoveForkdAccountEvent> get copyWith => __$R
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthEvent.removeforkdAccount'))
     ..add(DiagnosticsProperty('account', account));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RemoveForkdAccountEvent&&(identical(other.account, account) || other.account == account));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RemoveForkdAccountEvent&&(identical(other.account, account) || other.account == account));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,account);
+int get hashCode {
+    return Object.hash(runtimeType,account);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthEvent.removeforkdAccount(account: $account)';
+    return 'AuthEvent.removeforkdAccount(account: $account)';
 }
 
 
@@ -522,23 +529,25 @@ _$SetActiveAccountEventCopyWith<_SetActiveAccountEvent> get copyWith => __$SetAc
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthEvent.setActiveAccount'))
     ..add(DiagnosticsProperty('account', account));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SetActiveAccountEvent&&(identical(other.account, account) || other.account == account));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SetActiveAccountEvent&&(identical(other.account, account) || other.account == account));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,account);
+int get hashCode {
+    return Object.hash(runtimeType,account);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthEvent.setActiveAccount(account: $account)';
+    return 'AuthEvent.setActiveAccount(account: $account)';
 }
 
 
@@ -593,14 +602,14 @@ mixin _$AuthState implements DiagnosticableTreeMixin {
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthState'))
     ;
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState);
 }
 
 
@@ -609,7 +618,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthState()';
+    return 'AuthState()';
 }
 
 
@@ -770,14 +779,14 @@ class _AuthLoading with DiagnosticableTreeMixin implements AuthState {
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthState.loading'))
     ;
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthLoading);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthLoading);
 }
 
 
@@ -786,7 +795,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthState.loading()';
+    return 'AuthState.loading()';
 }
 
 
@@ -799,7 +808,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 
 
 class _AuthData with DiagnosticableTreeMixin implements AuthState {
-  const _AuthData({required final  List<AccountEntity> accounts, required this.activeAccount}): _accounts = accounts;
+  const _AuthData({required  List<AccountEntity> accounts, required this.activeAccount}): _accounts = accounts;
   
 
  final  List<AccountEntity> _accounts;
@@ -820,23 +829,25 @@ _$AuthDataCopyWith<_AuthData> get copyWith => __$AuthDataCopyWithImpl<_AuthData>
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthState.data'))
     ..add(DiagnosticsProperty('accounts', accounts))..add(DiagnosticsProperty('activeAccount', activeAccount));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthData&&const DeepCollectionEquality().equals(other._accounts, _accounts)&&(identical(other.activeAccount, activeAccount) || other.activeAccount == activeAccount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthData&&const DeepCollectionEquality().equals(other.accounts, _accounts)&&(identical(other.activeAccount, activeAccount) || other.activeAccount == activeAccount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_accounts),activeAccount);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_accounts),activeAccount);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthState.data(accounts: $accounts, activeAccount: $activeAccount)';
+    return 'AuthState.data(accounts: $accounts, activeAccount: $activeAccount)';
 }
 
 
@@ -905,23 +916,25 @@ _$AuthErrorCopyWith<_AuthError> get copyWith => __$AuthErrorCopyWithImpl<_AuthEr
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AuthState.error'))
     ..add(DiagnosticsProperty('error', error));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthError&&(identical(other.error, error) || other.error == error));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthError&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,error);
+int get hashCode {
+    return Object.hash(runtimeType,error);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AuthState.error(error: $error)';
+    return 'AuthState.error(error: $error)';
 }
 
 

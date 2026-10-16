@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account_entity.dart';
@@ -9,6 +9,7 @@ part of 'account_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $AccountEntityCopyWith<AccountEntity> get copyWith => _$AccountEntityCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountEntity&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.domain, domain) || other.domain == domain));
+  final _this = this as AccountEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountEntity&&(identical(other.tokenHash, _this.tokenHash) || other.tokenHash == _this.tokenHash)&&(identical(other.avatarUrl, _this.avatarUrl) || other.avatarUrl == _this.avatarUrl)&&(identical(other.domain, _this.domain) || other.domain == _this.domain));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,tokenHash,avatarUrl,domain);
+int get hashCode {
+  final _this = this as AccountEntity;
+  return Object.hash(runtimeType,_this.tokenHash,_this.avatarUrl,_this.domain);
+}
 
 @override
 String toString() {
-  return 'AccountEntity(tokenHash: $tokenHash, avatarUrl: $avatarUrl, domain: $domain)';
+  final _this = this as AccountEntity;
+  return 'AccountEntity(tokenHash: ${_this.tokenHash}, avatarUrl: ${_this.avatarUrl}, domain: ${_this.domain})';
 }
 
 
@@ -226,16 +232,18 @@ $GithubAccountEntityCopyWith<GithubAccountEntity> get copyWith => _$GithubAccoun
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GithubAccountEntity&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.login, login) || other.login == login)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.domain, domain) || other.domain == domain));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is GithubAccountEntity&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.login, login) || other.login == login)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.domain, domain) || other.domain == domain));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,tokenHash,login,avatarUrl,domain);
+int get hashCode {
+    return Object.hash(runtimeType,tokenHash,login,avatarUrl,domain);
+}
 
 @override
 String toString() {
-  return 'AccountEntity.github(tokenHash: $tokenHash, login: $login, avatarUrl: $avatarUrl, domain: $domain)';
+    return 'AccountEntity.github(tokenHash: $tokenHash, login: $login, avatarUrl: $avatarUrl, domain: $domain)';
 }
 
 
@@ -302,16 +310,18 @@ $GitlabAccountEntityCopyWith<GitlabAccountEntity> get copyWith => _$GitlabAccoun
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GitlabAccountEntity&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.username, username) || other.username == username)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.gitlabId, gitlabId) || other.gitlabId == gitlabId)&&(identical(other.accessLevel, accessLevel) || other.accessLevel == accessLevel)&&(identical(other.domain, domain) || other.domain == domain));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is GitlabAccountEntity&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.username, username) || other.username == username)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.gitlabId, gitlabId) || other.gitlabId == gitlabId)&&(identical(other.accessLevel, accessLevel) || other.accessLevel == accessLevel)&&(identical(other.domain, domain) || other.domain == domain));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,tokenHash,username,name,avatarUrl,bio,gitlabId,accessLevel,domain);
+int get hashCode {
+    return Object.hash(runtimeType,tokenHash,username,name,avatarUrl,bio,gitlabId,accessLevel,domain);
+}
 
 @override
 String toString() {
-  return 'AccountEntity.gitlab(tokenHash: $tokenHash, username: $username, name: $name, avatarUrl: $avatarUrl, bio: $bio, gitlabId: $gitlabId, accessLevel: $accessLevel, domain: $domain)';
+    return 'AccountEntity.gitlab(tokenHash: $tokenHash, username: $username, name: $name, avatarUrl: $avatarUrl, bio: $bio, gitlabId: $gitlabId, accessLevel: $accessLevel, domain: $domain)';
 }
 
 

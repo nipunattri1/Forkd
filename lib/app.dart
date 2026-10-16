@@ -10,14 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      builder: (context, state) {
-        return MaterialApp.router(
-          routerConfig: router,
-          theme: ForkdTheme.lightTheme,
-          darkTheme: ForkdTheme.darkTheme,
-        );
-      },
+    return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         state.mapOrNull(
           error: (error) {
@@ -29,6 +22,11 @@ class MyApp extends StatelessWidget {
           },
         );
       },
+      child: MaterialApp.router(
+        routerConfig: router,
+        theme: ForkdTheme.light,
+        darkTheme: ForkdTheme.dark,
+      ),
     );
   }
 }

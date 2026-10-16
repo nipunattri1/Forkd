@@ -23,7 +23,7 @@ class ForkdTokenService {
     final hash = useHash ?? _genTokenHash();
     try {
       await _storage.write(key: hash, value: jsonEncode(token.toJson()));
-    } on Exception catch (e, _) {
+    } on Exception catch (e) {
       return Either.left(e);
     }
 
@@ -38,7 +38,7 @@ class ForkdTokenService {
         jsonDecode(token) as Map<String, dynamic>,
       );
       return Either.right(tokenData.accessToken);
-    } on Exception catch (e, _) {
+    } on Exception catch (e) {
       return Either.left(e);
     }
   }
@@ -51,7 +51,7 @@ class ForkdTokenService {
         jsonDecode(token) as Map<String, dynamic>,
       );
       return Either.right(tokenData);
-    } on Exception catch (e, _) {
+    } on Exception catch (e) {
       return Either.left(e);
     }
   }
@@ -59,7 +59,7 @@ class ForkdTokenService {
   Future<Either<Exception, void>> removeToken(String tokenHash) async {
     try {
       await _storage.delete(key: tokenHash);
-    } on Exception catch (e, _) {
+    } on Exception catch (e) {
       return Either.left(e);
     }
     return Either.right(null);

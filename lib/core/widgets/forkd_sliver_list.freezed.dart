@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'forkd_sliver_list.dart';
@@ -9,6 +9,7 @@ part of 'forkd_sliver_list.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$ForkdListTileData {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ForkdListTileData);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ForkdListTileData);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ForkdListTileData()';
+    return 'ForkdListTileData()';
 }
 
 
@@ -119,10 +120,10 @@ return custom(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Widget? leading,  Widget title,  Widget? subtitle,  Widget? trailing,  VoidCallback? onTap,  bool decoration)?  $default,{TResult Function( Widget child)?  custom,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Widget title,  Widget? leading,  Widget? subtitle,  Widget? trailing,  VoidCallback? onTap,  bool decoration)?  $default,{TResult Function( Widget child)?  custom,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ForkdDefaultListTileData() when $default != null:
-return $default(_that.leading,_that.title,_that.subtitle,_that.trailing,_that.onTap,_that.decoration);case _ForkdTileWidget() when custom != null:
+return $default(_that.title,_that.leading,_that.subtitle,_that.trailing,_that.onTap,_that.decoration);case _ForkdTileWidget() when custom != null:
 return custom(_that.child);case _:
   return orElse();
 
@@ -141,10 +142,10 @@ return custom(_that.child);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Widget? leading,  Widget title,  Widget? subtitle,  Widget? trailing,  VoidCallback? onTap,  bool decoration)  $default,{required TResult Function( Widget child)  custom,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Widget title,  Widget? leading,  Widget? subtitle,  Widget? trailing,  VoidCallback? onTap,  bool decoration)  $default,{required TResult Function( Widget child)  custom,}) {final _that = this;
 switch (_that) {
 case _ForkdDefaultListTileData():
-return $default(_that.leading,_that.title,_that.subtitle,_that.trailing,_that.onTap,_that.decoration);case _ForkdTileWidget():
+return $default(_that.title,_that.leading,_that.subtitle,_that.trailing,_that.onTap,_that.decoration);case _ForkdTileWidget():
 return custom(_that.child);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -159,10 +160,10 @@ return custom(_that.child);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Widget? leading,  Widget title,  Widget? subtitle,  Widget? trailing,  VoidCallback? onTap,  bool decoration)?  $default,{TResult? Function( Widget child)?  custom,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Widget title,  Widget? leading,  Widget? subtitle,  Widget? trailing,  VoidCallback? onTap,  bool decoration)?  $default,{TResult? Function( Widget child)?  custom,}) {final _that = this;
 switch (_that) {
 case _ForkdDefaultListTileData() when $default != null:
-return $default(_that.leading,_that.title,_that.subtitle,_that.trailing,_that.onTap,_that.decoration);case _ForkdTileWidget() when custom != null:
+return $default(_that.title,_that.leading,_that.subtitle,_that.trailing,_that.onTap,_that.decoration);case _ForkdTileWidget() when custom != null:
 return custom(_that.child);case _:
   return null;
 
@@ -175,11 +176,11 @@ return custom(_that.child);case _:
 
 
 class _ForkdDefaultListTileData extends ForkdListTileData {
-   _ForkdDefaultListTileData({this.leading, required this.title, this.subtitle, this.trailing, this.onTap, this.decoration = true}): super._();
+   _ForkdDefaultListTileData({required this.title, this.leading, this.subtitle, this.trailing, this.onTap, this.decoration = true}): super._();
   
 
- final  Widget? leading;
  final  Widget title;
+ final  Widget? leading;
  final  Widget? subtitle;
  final  Widget? trailing;
  final  VoidCallback? onTap;
@@ -195,16 +196,18 @@ _$ForkdDefaultListTileDataCopyWith<_ForkdDefaultListTileData> get copyWith => __
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ForkdDefaultListTileData&&(identical(other.leading, leading) || other.leading == leading)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.trailing, trailing) || other.trailing == trailing)&&(identical(other.onTap, onTap) || other.onTap == onTap)&&(identical(other.decoration, decoration) || other.decoration == decoration));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ForkdDefaultListTileData&&(identical(other.title, title) || other.title == title)&&(identical(other.leading, leading) || other.leading == leading)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.trailing, trailing) || other.trailing == trailing)&&(identical(other.onTap, onTap) || other.onTap == onTap)&&(identical(other.decoration, decoration) || other.decoration == decoration));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,leading,title,subtitle,trailing,onTap,decoration);
+int get hashCode {
+    return Object.hash(runtimeType,title,leading,subtitle,trailing,onTap,decoration);
+}
 
 @override
 String toString() {
-  return 'ForkdListTileData(leading: $leading, title: $title, subtitle: $subtitle, trailing: $trailing, onTap: $onTap, decoration: $decoration)';
+    return 'ForkdListTileData(title: $title, leading: $leading, subtitle: $subtitle, trailing: $trailing, onTap: $onTap, decoration: $decoration)';
 }
 
 
@@ -215,7 +218,7 @@ abstract mixin class _$ForkdDefaultListTileDataCopyWith<$Res> implements $ForkdL
   factory _$ForkdDefaultListTileDataCopyWith(_ForkdDefaultListTileData value, $Res Function(_ForkdDefaultListTileData) _then) = __$ForkdDefaultListTileDataCopyWithImpl;
 @useResult
 $Res call({
- Widget? leading, Widget title, Widget? subtitle, Widget? trailing, VoidCallback? onTap, bool decoration
+ Widget title, Widget? leading, Widget? subtitle, Widget? trailing, VoidCallback? onTap, bool decoration
 });
 
 
@@ -232,11 +235,11 @@ class __$ForkdDefaultListTileDataCopyWithImpl<$Res>
 
 /// Create a copy of ForkdListTileData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? leading = freezed,Object? title = null,Object? subtitle = freezed,Object? trailing = freezed,Object? onTap = freezed,Object? decoration = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? title = null,Object? leading = freezed,Object? subtitle = freezed,Object? trailing = freezed,Object? onTap = freezed,Object? decoration = null,}) {
   return _then(_ForkdDefaultListTileData(
-leading: freezed == leading ? _self.leading : leading // ignore: cast_nullable_to_non_nullable
-as Widget?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as Widget,subtitle: freezed == subtitle ? _self.subtitle : subtitle // ignore: cast_nullable_to_non_nullable
+title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as Widget,leading: freezed == leading ? _self.leading : leading // ignore: cast_nullable_to_non_nullable
+as Widget?,subtitle: freezed == subtitle ? _self.subtitle : subtitle // ignore: cast_nullable_to_non_nullable
 as Widget?,trailing: freezed == trailing ? _self.trailing : trailing // ignore: cast_nullable_to_non_nullable
 as Widget?,onTap: freezed == onTap ? _self.onTap : onTap // ignore: cast_nullable_to_non_nullable
 as VoidCallback?,decoration: null == decoration ? _self.decoration : decoration // ignore: cast_nullable_to_non_nullable
@@ -266,16 +269,18 @@ _$ForkdTileWidgetCopyWith<_ForkdTileWidget> get copyWith => __$ForkdTileWidgetCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ForkdTileWidget&&(identical(other.child, child) || other.child == child));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ForkdTileWidget&&(identical(other.child, child) || other.child == child));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,child);
+int get hashCode {
+    return Object.hash(runtimeType,child);
+}
 
 @override
 String toString() {
-  return 'ForkdListTileData.custom(child: $child)';
+    return 'ForkdListTileData.custom(child: $child)';
 }
 
 

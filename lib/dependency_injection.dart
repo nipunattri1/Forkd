@@ -15,11 +15,10 @@ import 'package:forkd/features/auth/domain/usecase/is_logged_in_usecase.dart';
 import 'package:forkd/features/auth/domain/usecase/remove_forkd_account_usecase.dart';
 import 'package:forkd/features/auth/domain/usecase/set_active_forkd_account_usecase.dart';
 import 'package:forkd/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:forkd/features/dashboard/data/datasources/dashboard_gitlab_datasource.dart';
-import 'package:forkd/features/dashboard/data/repositories/dashboard_gitlab_repsitory_imp.dart';
-import 'package:forkd/features/dashboard/domain/repositories/dashboard_gitlab_repsitory.dart';
-import 'package:forkd/features/dashboard/domain/usecases/get_gitlab_dashboard_data_usecase.dart';
-import 'package:forkd/features/dashboard/persentation/bloc/dashboard_bloc.dart';
+import 'package:forkd/features/dashboard/application/use_cases/fetch_merge_requests.dart';
+import 'package:forkd/features/dashboard/domain/repositories/merge_request_repository.dart';
+import 'package:forkd/features/dashboard/infrastructure/repositories/fake_merge_request_repository.dart';
+import 'package:forkd/features/dashboard/persentation/bloc/merge_requests_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -31,7 +30,7 @@ Future<void> configureDependencies() async {
 
   _configureDataSources();
 
-  _configureRepsitories();
+  _configureRepsositories();
 
   _configureUseCases();
 
@@ -51,9 +50,8 @@ void _configureBlocs() {
         logger: di(),
       ),
     )
-    ..registerSingleton(
-      DashboardBloc(getDashboardDataUsecase: di<GetDashboardDataUsecase>()),
-    );
+    // Factories: HomeScreen's BlocProvider creates (and closes) one per screen.
+    ..registerFactory<MergeRequestsBloc>(() => MergeRequestsBloc(di()));
 }
 
 void _configureUseCases() {
@@ -65,6 +63,7 @@ void _configureUseCases() {
   //     authRepo: di<ForkdAuthRepo>(),
   //   ),
   // );
+  // Auth related
   di
     ..registerLazySingleton(
       () => AddGitlabOAuthAccountUseCase(
@@ -95,18 +94,22 @@ void _configureUseCases() {
       () => IsLoggedInUseCase(forkdAuthRepo: di<ForkdAuthRepo>()),
     )
     ..registerLazySingleton(
-      () => GetDashboardDataUsecase(
-        gitlabRepsitory: di<DashboardGitlabRepsitory>(),
-      ),
+      () => FetchMergeRequests(di<MergeRequestRepository>()),
     );
 }
 
-void _configureRepsitories() {
+void _configureRepsositories() {
   di
     ..registerSingleton<GitlabAuthRepo>(
       GitlabAuthRepoImp(
         gitlabDataSource: di<GitlabDataSource>(),
         logger: di<Logger>(),
+      ),
+    )
+    ..registerSingleton<ForkdAuthRepo>(
+      ForkdAuthRepoImp(
+        accountsDataSource: di<ForkdAccountsDataSource>(),
+        tokenDataSource: di<ForkdTokenService>(),
       ),
     )
     // di.registerSingleton<GithubAuthRepo>(
@@ -115,16 +118,8 @@ void _configureRepsitories() {
     //     appLinks: di<AppLinks>(),
     //   ),
     // );
-    ..registerSingleton<ForkdAuthRepo>(
-      ForkdAuthRepoImp(
-        accountsDataSource: di<ForkdAccountsDataSource>(),
-        tokenDataSource: di<ForkdTokenService>(),
-      ),
-    )
-    ..registerSingleton<DashboardGitlabRepsitory>(
-      DashboardGitlabRepsitoryImp(
-        gitlabDatasource: di<DashboardGitlabDatasource>(),
-      ),
+    ..registerLazySingleton<MergeRequestRepository>(
+      () => const FakeMergeRequestRepository(),
     );
 }
 
@@ -134,14 +129,13 @@ void _configureDataSources() {
       ForkdAccountsDataSource(tokenService: di<ForkdTokenService>()),
     )
     // di.registerSingleton<GithubDataSource>(GithubDataSource());
-    ..registerSingleton<GitlabDataSource>(GitlabDataSource())
-    ..registerSingleton<DashboardGitlabDatasource>(DashboardGitlabDatasource());
+    ..registerSingleton<GitlabDataSource>(GitlabDataSource());
 }
 
 void _configureCore() {
   di
     ..registerSingleton<ForkdTokenService>(ForkdTokenService())
-    ..registerSingleton(AppLinks())
+    ..registerSingleton<AppLinks>(AppLinks())
     ..registerLazySingleton<Logger>(
       () => Logger(
         printer: PrettyPrinter(

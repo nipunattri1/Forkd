@@ -47,7 +47,7 @@ class GithubDataSource {
         login: queryData['viewer']['login'] as String,
         avatarUrl: queryData['viewer']['avatarUrl'] as String,
       );
-    } catch (e, _) {
+    } catch (e) {
       throw Exception(e);
     }
   }
