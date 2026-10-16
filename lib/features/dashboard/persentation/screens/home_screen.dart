@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forkd/core/theme/forkd_theme.dart';
 import 'package:forkd/core/widgets/forkd_scaffold.dart';
 import 'package:forkd/dependency_injection.dart';
-import 'package:forkd/features/dashboard/persentation/bloc/dashboard_section_cubit.dart';
+import 'package:forkd/features/dashboard/persentation/bloc/dashboard_bloc.dart';
 import 'package:forkd/features/dashboard/persentation/bloc/merge_requests_bloc.dart';
 import 'package:forkd/features/dashboard/persentation/widgets/dashboard_chrome.dart';
 import 'package:forkd/features/dashboard/persentation/widgets/merge_request_filter_sheet.dart';
@@ -38,11 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<DashboardBloc>(
+          create: (context) => di(),
+        ),
         BlocProvider<MergeRequestsBloc>(
           create: (context) => di()..add(const MergeRequestsEvent.started()),
-        ),
-        BlocProvider<DashboardSectionCubit>(
-          create: (context) => DashboardSectionCubit(),
         ),
       ],
       child: ForkdScaffold(
@@ -265,12 +265,16 @@ class DashboardScreen extends StatelessWidget {
           ),
           data: (d) => Column(
             children: [
-              BlocBuilder<DashboardSectionCubit, DashboardSection>(
-                builder: (context, section) => DashboardTabs(
-                  selectedIndex: section.index,
-                  onChanged: (i) => context.read<DashboardSectionCubit>().select(
-                        DashboardSection.values[i],
-                      ),
+              BlocBuilder<DashboardBloc, DashboardState>(
+                builder: (context, state) => DashboardTabs(
+                  selectedIndex: state.map(
+                    selected: (s) => s.section.index,
+                  ),
+                  onChanged: (i) => context
+                      .read<DashboardBloc>()
+                      .add(DashboardEvent.sectionChanged(
+                            DashboardSection.values[i],
+                          )),
                   tabs: const [
                     DashboardTab('To-Do'),
                     DashboardTab('Merge requests'),
