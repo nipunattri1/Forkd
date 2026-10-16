@@ -17,7 +17,7 @@ import 'package:forkd/features/auth/domain/usecase/set_active_forkd_account_usec
 import 'package:forkd/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:forkd/features/dashboard/application/use_cases/fetch_merge_requests.dart';
 import 'package:forkd/features/dashboard/domain/repositories/merge_request_repository.dart';
-import 'package:forkd/features/dashboard/infrastructure/repositories/fake_merge_request_repository.dart';
+import 'package:forkd/features/dashboard/infrastructure/repositories/gitlab_merge_request_repository.dart';
 import 'package:forkd/features/dashboard/persentation/bloc/dashboard_bloc.dart';
 import 'package:forkd/features/dashboard/persentation/bloc/merge_requests_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -121,7 +121,10 @@ void _configureRepsositories() {
     //   ),
     // );
     ..registerLazySingleton<MergeRequestRepository>(
-      () => const FakeMergeRequestRepository(),
+      () => GitlabMergeRequestRepository(
+        accountsService: di<ForkdAccountsDataSource>(),
+        dio: di<Dio>(),
+      ),
     );
 }
 
