@@ -203,7 +203,6 @@ void _configureCore() {
       Dio()
         ..interceptors.add(
           PrettyDioLogger(
-            requestBody: true,
             filter: (options, args) {
               if (options.path.contains('/posts')) {
                 return false;

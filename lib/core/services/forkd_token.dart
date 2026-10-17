@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:forkd/core/common/enums.dart';
 import 'package:forkd/core/common/errors.dart';
@@ -118,7 +117,10 @@ class ForkdTokenService {
   ) async {
     final domainlocal = domain.trim();
 
-    final tokenUri = Uri.https(domainlocal, '/oauth/token');
+    final tokenUri = domainlocal.startsWith('http://') ||
+            domainlocal.startsWith('https://')
+        ? Uri.parse(domainlocal).replace(path: '/oauth/token')
+        : Uri.https(domainlocal, '/oauth/token');
     const redirectUri = '$appUriScheme://$appUriBase/auth/gitlab';
 
     final body = {
@@ -132,10 +134,6 @@ class ForkdTokenService {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: body,
     );
-    if (kDebugMode) {
-      print('next: $body');
-    }
-
     if (tokenRes.statusCode != 200) {
       throw Exception(
         'Token refresh failed ${tokenRes.statusCode}: ${tokenRes.body}',

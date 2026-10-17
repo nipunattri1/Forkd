@@ -100,7 +100,7 @@ class ForkdAccountsDataSource {
       'Request received to shift active context to domain: ${account.domain}',
     );
     final accounts = await getallAccounts;
-    if (accounts.contains(account)) {
+    if (accounts.any((a) => a.tokenHash == account.tokenHash)) {
       await _saveActiveAccount(account);
       _inMemoryActiveAccount = account;
 
@@ -202,7 +202,7 @@ class ForkdAccountsDataSource {
     final accounts = await getallAccounts;
     final activeAccount = await getActiveAccount;
 
-    accounts.removeWhere((element) => element == account);
+    accounts.removeWhere((element) => element.tokenHash == account.tokenHash);
 
     try {
       await _saveAccountsList(accounts);

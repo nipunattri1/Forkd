@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:forkd/core/common/strings.dart';
 import 'package:forkd/features/auth/data/models/account.dart';
 import 'package:forkd/features/auth/data/models/api/gitlab.dart';
@@ -59,7 +58,11 @@ class GitlabDataSource {
     required String redirectUri,
     required String clientId,
   }) async {
-    final tokenUri = Uri.https(domain.trim(), '/oauth/token');
+    final trimmedDomain = domain.trim();
+    final tokenUri = trimmedDomain.startsWith('http://') ||
+            trimmedDomain.startsWith('https://')
+        ? Uri.parse(trimmedDomain).replace(path: '/oauth/token')
+        : Uri.https(trimmedDomain, '/oauth/token');
     final body = {
       'client_id': clientId,
       'code': code,
@@ -72,10 +75,6 @@ class GitlabDataSource {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: body,
     );
-    if (kDebugMode) {
-      print('next: $body');
-    }
-
     if (tokenRes.statusCode != 200) {
       throw Exception(
         'Token exchange failed ${tokenRes.statusCode}: ${tokenRes.body}',

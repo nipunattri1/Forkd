@@ -13,7 +13,7 @@ class NetworkingHelpers {
     while (true) {
       final res = await dio.get<dynamic>(
         path,
-        queryParameters: {...query, 'per_page': 10, 'page': page},
+        queryParameters: {...query, 'per_page': 100, 'page': page},
       );
       final status = res.statusCode ?? 0;
       if (status >= 400) {
@@ -36,9 +36,8 @@ class NetworkingHelpers {
   static void configureDio({required String domain}) {
     var formattedBaseUrl = domain.trim();
 
-    if (formattedBaseUrl.startsWith('http://')) {
-      formattedBaseUrl = formattedBaseUrl.replaceFirst('http://', 'https://');
-    } else if (!formattedBaseUrl.startsWith('https://')) {
+    if (!formattedBaseUrl.startsWith('http://') &&
+        !formattedBaseUrl.startsWith('https://')) {
       formattedBaseUrl = 'https://$formattedBaseUrl';
     }
 

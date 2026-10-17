@@ -81,7 +81,6 @@ class AuthInterceptor extends Interceptor {
 
     if (kDebugMode) {
       print('[Request] ${options.uri}');
-      print('[Body]    ${options.data}');
     }
 
     return super.onRequest(options, handler);
