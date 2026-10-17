@@ -9,7 +9,7 @@ Under `lib/features/<feature>/`:
 - `domain/` — entities, repository interfaces, value objects, use cases.
 - `data/` / `infrastructure/` — datasources, models, repository implementations.
 - `application/` — dashboard use cases.
-- `presentation/` — BLoC/Cubit, mappers, screens, widgets. (`presentation` is intentionally misspelled; keep it.)
+- `presentation/` — BLoC/Cubit, mappers, screens, widgets.
 
 Cross-cutting code lives in `lib/core/` (networking, router, theme, services, widgets, utils).
 

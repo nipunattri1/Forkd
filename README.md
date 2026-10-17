@@ -1,9 +1,29 @@
 # Forkd
 
+[![Flutter](https://img.shields.io/badge/Flutter-3.47.7-02569B?logo=flutter)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.12+-0175C2?logo=dart)](https://dart.dev)
+[![Analysis](https://img.shields.io/badge/analyze-0%20issues-brightgreen)](#commands)
+[![License](https://img.shields.io/badge/license-unspecified-lightgrey)](#license)
+
 A Flutter mobile client for GitLab. Forkd talks directly to the GitLab REST API
 v4 and pulls the things you would otherwise open a browser for — your to-dos,
 merge requests, pipelines and projects — into a single app, with support for
 multiple accounts and self-hosted GitLab instances.
+
+## Table of contents
+
+- [Features](#features)
+- [Tech stack](#tech-stack)
+- [Architecture](#architecture)
+- [Getting started](#getting-started)
+- [Commands](#commands)
+- [Project structure](#project-structure)
+- [Testing](#testing)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Roadmap](#roadmap)
+- [Security](#security)
+- [License](#license)
 
 ## Features
 
@@ -110,14 +130,15 @@ lib/
     └── dashboard/                # to-dos, MRs, projects, pipelines
 ```
 
-## Contributing
+## Testing
 
-- Keep `fvm flutter analyze` at **0 issues** before opening a PR.
-- Regenerate freezed / JSON code with `fvm run build_runner build` after any
-  model change.
-- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/)
-  (`feat:`, `fix:`, `refactor:`, `docs:`, ...).
-- No new dependencies or abstractions without discussion.
+```bash
+fvm flutter test            # run all tests
+fvm flutter analyze         # static analysis (must be 0 issues)
+```
+
+Tests live under `test/` mirroring `lib/`: `test/auth/`, `test/core/`,
+`test/dashboard/`. New non-trivial logic should ship with a small test.
 
 ## Documentation
 
@@ -127,6 +148,28 @@ Full docs live under [`doc/`](doc/), including a [wiki home](doc/Home.md),
 [testing](doc/Testing.md) and [contributing](doc/Contributing.md). Generated
 API reference is in [`doc/api/`](doc/api/index.html).
 
+## Contributing
+
+- Keep `fvm flutter analyze` at **0 issues** before opening a PR.
+- Regenerate freezed / JSON code with `fvm run build_runner build` after any
+  model change.
+- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/)
+  (`feat:`, `fix:`, `refactor:`, `docs:`, ...).
+- No new dependencies or abstractions without discussion.
+
+## Roadmap
+
+- Implement Explore and You tabs.
+- Wire the Issue feed.
+- Re-enable GitHub support behind its domain interfaces.
+- Add CI for analyze + test.
+
+## Security
+
+Tokens are stored in `flutter_secure_storage` and never in plaintext
+preferences. Report vulnerabilities privately to the maintainers; do not open
+public issues for security bugs.
+
 ## License
 
-No license has been added yet.
+Released under the [MIT License](LICENSE).
