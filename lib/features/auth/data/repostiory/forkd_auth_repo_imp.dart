@@ -29,7 +29,7 @@ class ForkdAuthRepoImp implements ForkdAuthRepo {
       accountsDataSource.getallAccounts;
 
   @override
-  Future<bool> get isLoggedIn => accountsDataSource.isLogedIn;
+  Future<bool> get isLoggedIn => accountsDataSource.isLoggedIn;
 
   @override
   Future<Either<Exception, void>> removeAccount(AccountEntity account) {

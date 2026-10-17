@@ -1,4 +1,5 @@
 import 'package:forkd/core/common/enums.dart';
+import 'package:forkd/core/common/strings.dart';
 import 'package:forkd/features/auth/domain/entities/account_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -16,6 +17,13 @@ sealed class AccountModel with _$AccountModel {
     @Default('github.com') String domain,
   }) = GithubAccModel;
 
+  factory AccountModel.gitee({
+    required String tokenHash,
+    required String login,
+    required String avatarUrl,
+    @Default('gitee.com') String domain,
+  }) = GiteeAccModel;
+
   factory AccountModel.gitlab({
     required String tokenHash,
     required String username,
@@ -25,6 +33,8 @@ sealed class AccountModel with _$AccountModel {
     required int gitlabId,
     required int? accessLevel,
     @Default('gitlab.com') String domain,
+    // OAuth application id; differs per self-hosted instance.
+    @Default(gitlabClientId) String clientId,
   }) = GitlabAccModel;
 
   factory AccountModel.fromJson(Map<String, dynamic> json) =>
@@ -44,6 +54,18 @@ sealed class AccountModel with _$AccountModel {
           avatarUrl: avatarUrl,
           domain: domain,
         ),
+      GiteeAccountEntity(
+        :final tokenHash,
+        :final login,
+        :final avatarUrl,
+        :final domain,
+      ) =>
+        AccountModel.gitee(
+          tokenHash: tokenHash,
+          login: login,
+          avatarUrl: avatarUrl,
+          domain: domain,
+        ),
       GitlabAccountEntity(
         :final tokenHash,
         :final username,
@@ -53,6 +75,7 @@ sealed class AccountModel with _$AccountModel {
         :final name,
         :final accessLevel,
         :final bio,
+        :final clientId,
       ) =>
         AccountModel.gitlab(
           tokenHash: tokenHash,
@@ -63,6 +86,7 @@ sealed class AccountModel with _$AccountModel {
           name: name,
           accessLevel: accessLevel,
           bio: bio,
+          clientId: clientId,
         ),
     };
   }
@@ -70,7 +94,8 @@ sealed class AccountModel with _$AccountModel {
   Platform get platform {
     return switch (this) {
       GitlabAccModel() => Platform.gitlab,
-      GithubAccModel() => throw UnimplementedError(),
+      GithubAccModel() => Platform.github,
+      GiteeAccModel() => Platform.gitee,
     };
   }
 
@@ -88,6 +113,18 @@ sealed class AccountModel with _$AccountModel {
           avatarUrl: avatarUrl,
           domain: domain,
         ),
+      GiteeAccModel(
+        :final tokenHash,
+        :final login,
+        :final avatarUrl,
+        :final domain,
+      ) =>
+        AccountEntity.gitee(
+          tokenHash: tokenHash,
+          login: login,
+          avatarUrl: avatarUrl,
+          domain: domain,
+        ),
       GitlabAccModel(
         :final tokenHash,
         :final username,
@@ -97,6 +134,7 @@ sealed class AccountModel with _$AccountModel {
         :final name,
         :final accessLevel,
         :final bio,
+        :final clientId,
       ) =>
         AccountEntity.gitlab(
           tokenHash: tokenHash,
@@ -107,6 +145,7 @@ sealed class AccountModel with _$AccountModel {
           name: name,
           accessLevel: accessLevel,
           bio: bio,
+          clientId: clientId,
         ),
     };
   }

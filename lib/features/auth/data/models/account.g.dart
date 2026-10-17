@@ -24,6 +24,24 @@ Map<String, dynamic> _$GithubAccModelToJson(GithubAccModel instance) =>
       'runtimeType': instance.$type,
     };
 
+GiteeAccModel _$GiteeAccModelFromJson(Map<String, dynamic> json) =>
+    GiteeAccModel(
+      tokenHash: json['tokenHash'] as String,
+      login: json['login'] as String,
+      avatarUrl: json['avatarUrl'] as String,
+      domain: json['domain'] as String? ?? 'gitee.com',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$GiteeAccModelToJson(GiteeAccModel instance) =>
+    <String, dynamic>{
+      'tokenHash': instance.tokenHash,
+      'login': instance.login,
+      'avatarUrl': instance.avatarUrl,
+      'domain': instance.domain,
+      'runtimeType': instance.$type,
+    };
+
 GitlabAccModel _$GitlabAccModelFromJson(Map<String, dynamic> json) =>
     GitlabAccModel(
       tokenHash: json['tokenHash'] as String,
@@ -34,6 +52,7 @@ GitlabAccModel _$GitlabAccModelFromJson(Map<String, dynamic> json) =>
       gitlabId: (json['gitlabId'] as num).toInt(),
       accessLevel: (json['accessLevel'] as num?)?.toInt(),
       domain: json['domain'] as String? ?? 'gitlab.com',
+      clientId: json['clientId'] as String? ?? gitlabClientId,
       $type: json['runtimeType'] as String?,
     );
 
@@ -47,5 +66,6 @@ Map<String, dynamic> _$GitlabAccModelToJson(GitlabAccModel instance) =>
       'gitlabId': instance.gitlabId,
       'accessLevel': instance.accessLevel,
       'domain': instance.domain,
+      'clientId': instance.clientId,
       'runtimeType': instance.$type,
     };

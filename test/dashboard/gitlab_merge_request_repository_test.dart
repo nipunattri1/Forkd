@@ -1,8 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:forkd/features/dashboard/data/platforms/gitlab/gitlab_merge_request_repository.dart';
 import 'package:forkd/features/dashboard/domain/entities/merge_request_entity.dart';
 import 'package:forkd/features/dashboard/domain/value_objects/merge_request_filter.dart';
-import 'package:forkd/features/dashboard/infrastructure/repositories/gitlab_merge_request_repository.dart';
 
 void main() {
   group('GitlabMergeRequestRepository.fromMap', () {
@@ -17,8 +16,10 @@ void main() {
         'updated_at': '2026-10-17T10:00:00.000Z',
         'detailed_merge_status': 'unblocked',
         'user_notes_count': 6,
-        'approvals_before_merge': 2,
-        'labels': ['bug', {'name': 'priority', 'color': '#ff0000'}],
+        'labels': [
+          'bug',
+          {'name': 'priority', 'color': '#ff0000'},
+        ],
       });
 
       expect(entity.projectPath, 'acme/payments-api');
@@ -28,9 +29,6 @@ void main() {
       expect(entity.targetBranch, 'main');
       expect(entity.pipeline, PipelineStatus.success);
       expect(entity.comments, 6);
-      expect(entity.approvalsRequired, 2);
-      // Approvals aren't returned by the list endpoint, default to 0.
-      expect(entity.approvals, 0);
       expect(entity.labels.map((l) => l.name), ['bug', 'priority']);
     });
 

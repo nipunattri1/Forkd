@@ -14,6 +14,13 @@ sealed class AccountEntity with _$AccountEntity {
     required String domain,
   }) = GithubAccountEntity;
 
+  const factory AccountEntity.gitee({
+    required String tokenHash,
+    required String login,
+    required String avatarUrl,
+    required String domain,
+  }) = GiteeAccountEntity;
+
   const factory AccountEntity.gitlab({
     required String tokenHash,
     required String username,
@@ -23,13 +30,15 @@ sealed class AccountEntity with _$AccountEntity {
     required int gitlabId,
     required int? accessLevel,
     required String domain,
+    required String clientId,
   }) = GitlabAccountEntity;
 
   // Business logic lives here safely on the entity
   Platform get platform {
     return switch (this) {
       GitlabAccountEntity() => Platform.gitlab,
-      GithubAccountEntity() => throw UnimplementedError(),
+      GithubAccountEntity() => Platform.github,
+      GiteeAccountEntity() => Platform.gitee,
     };
   }
 }

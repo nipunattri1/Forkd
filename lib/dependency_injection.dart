@@ -1,10 +1,11 @@
 import 'package:app_links/app_links.dart';
 import 'package:dio/dio.dart';
+import 'package:forkd/core/networking/auth_interceptor.dart';
 import 'package:forkd/core/services/forkd_token.dart';
 import 'package:forkd/features/auth/data/datasource/forkd_accounts.dart';
-import 'package:forkd/features/auth/data/datasource/gitlab.dart';
+import 'package:forkd/features/auth/data/platforms/gitlab/datasource/gitlab.dart';
+import 'package:forkd/features/auth/data/platforms/gitlab/gitlab_auth_repo_imp.dart';
 import 'package:forkd/features/auth/data/repostiory/forkd_auth_repo_imp.dart';
-import 'package:forkd/features/auth/data/repostiory/gitlab_auth_repo_imp.dart';
 import 'package:forkd/features/auth/domain/repositories/forkd_auth_repo.dart';
 import 'package:forkd/features/auth/domain/repositories/gitlab_auth_repo.dart';
 import 'package:forkd/features/auth/domain/usecase/add_forkd_account_usercase.dart';
@@ -16,10 +17,23 @@ import 'package:forkd/features/auth/domain/usecase/remove_forkd_account_usecase.
 import 'package:forkd/features/auth/domain/usecase/set_active_forkd_account_usecase.dart';
 import 'package:forkd/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:forkd/features/dashboard/application/use_cases/fetch_merge_requests.dart';
+import 'package:forkd/features/dashboard/application/use_cases/fetch_pipelines.dart';
+import 'package:forkd/features/dashboard/application/use_cases/fetch_projects.dart';
+import 'package:forkd/features/dashboard/application/use_cases/fetch_todos.dart';
+import 'package:forkd/features/dashboard/application/use_cases/mark_todo_done.dart';
+import 'package:forkd/features/dashboard/data/platforms/gitlab/gitlab_merge_request_repository.dart';
+import 'package:forkd/features/dashboard/data/platforms/gitlab/gitlab_pipeline_repository.dart';
+import 'package:forkd/features/dashboard/data/platforms/gitlab/gitlab_project_repository.dart';
+import 'package:forkd/features/dashboard/data/platforms/gitlab/gitlab_todo_repository.dart';
 import 'package:forkd/features/dashboard/domain/repositories/merge_request_repository.dart';
-import 'package:forkd/features/dashboard/infrastructure/repositories/gitlab_merge_request_repository.dart';
-import 'package:forkd/features/dashboard/persentation/bloc/dashboard_bloc.dart';
-import 'package:forkd/features/dashboard/persentation/bloc/merge_requests_bloc.dart';
+import 'package:forkd/features/dashboard/domain/repositories/pipeline_repository.dart';
+import 'package:forkd/features/dashboard/domain/repositories/project_repository.dart';
+import 'package:forkd/features/dashboard/domain/repositories/todo_repository.dart';
+import 'package:forkd/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:forkd/features/dashboard/presentation/bloc/merge_requests_bloc.dart';
+import 'package:forkd/features/dashboard/presentation/bloc/pipelines_bloc.dart';
+import 'package:forkd/features/dashboard/presentation/bloc/projects_bloc.dart';
+import 'package:forkd/features/dashboard/presentation/bloc/todos_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -53,7 +67,10 @@ void _configureBlocs() {
     )
     // Factories: HomeScreen's BlocProvider creates (and closes) one per screen.
     ..registerFactory<DashboardBloc>(DashboardBloc.new)
-    ..registerFactory<MergeRequestsBloc>(() => MergeRequestsBloc(di()));
+    ..registerFactory<MergeRequestsBloc>(() => MergeRequestsBloc(di()))
+    ..registerFactory<TodosBloc>(() => TodosBloc(di(), di()))
+    ..registerFactory<ProjectsBloc>(() => ProjectsBloc(di()))
+    ..registerFactory<PipelinesBloc>(() => PipelinesBloc(di()));
 }
 
 void _configureUseCases() {
@@ -97,7 +114,11 @@ void _configureUseCases() {
     )
     ..registerLazySingleton(
       () => FetchMergeRequests(di<MergeRequestRepository>()),
-    );
+    )
+    ..registerLazySingleton(() => FetchTodos(di<TodoRepository>()))
+    ..registerLazySingleton(() => MarkTodoDone(di<TodoRepository>()))
+    ..registerLazySingleton(() => FetchProjects(di<ProjectRepository>()))
+    ..registerLazySingleton(() => FetchPipelines(di<PipelineRepository>()));
 }
 
 void _configureRepsositories() {
@@ -125,7 +146,37 @@ void _configureRepsositories() {
         accountsService: di<ForkdAccountsDataSource>(),
         dio: di<Dio>(),
       ),
+    )
+    ..registerLazySingleton<TodoRepository>(
+      () => GitlabTodoRepository(
+        accountsService: di<ForkdAccountsDataSource>(),
+        dio: di<Dio>(),
+      ),
+    )
+    ..registerLazySingleton<ProjectRepository>(
+      () => GitlabProjectRepository(
+        accountsService: di<ForkdAccountsDataSource>(),
+        dio: di<Dio>(),
+      ),
+    )
+    ..registerLazySingleton<PipelineRepository>(
+      () => GitlabPipelineRepository(
+        accountsService: di<ForkdAccountsDataSource>(),
+        dio: di<Dio>(),
+      ),
     );
+
+  // Attach the auth interceptor to the shared Dio once, after its
+  // dependencies are registered. NetworkingHelpers.configureDio only sets
+  // the base URL per request so the interceptor is never added twice.
+  di<Dio>().interceptors.add(
+    AuthInterceptor(
+      accountsService: di<ForkdAccountsDataSource>(),
+      tokenService: di<ForkdTokenService>(),
+      authRepo: di<ForkdAuthRepo>(),
+      dio: di<Dio>(),
+    ),
+  );
 }
 
 void _configureDataSources() {
@@ -152,7 +203,6 @@ void _configureCore() {
       Dio()
         ..interceptors.add(
           PrettyDioLogger(
-            requestHeader: true,
             requestBody: true,
             filter: (options, args) {
               if (options.path.contains('/posts')) {

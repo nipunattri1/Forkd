@@ -25,6 +25,10 @@ class AuthInterceptor extends Interceptor {
 
   DateTime? _rateLimitReset;
 
+  /// Marks a request that already went through one 401 refresh, so a retry that
+  /// 401s again surfaces the error instead of refreshing forever.
+  static const _retriedKey = 'forkd_retried';
+
   final Map<String, Completer<bool>> _platformRefreshCompleters = {};
 
   @override
@@ -91,6 +95,10 @@ class AuthInterceptor extends Interceptor {
     final statusCode = err.response?.statusCode;
 
     if (statusCode == 401) {
+      if (err.requestOptions.extra[_retriedKey] == true) {
+        return handler.next(err);
+      }
+
       final account = await authRepo.getActiveAccount;
       final isLoggedIn = await authRepo.isLoggedIn;
 
@@ -115,7 +123,6 @@ class AuthInterceptor extends Interceptor {
       final completer = Completer<bool>();
 
       _platformRefreshCompleters[uuid] = completer;
-      tokenService.setAccountRefreshing(uuid);
 
       log('401 on ${err.response?.realUri} — starting $uuid token refresh');
 
@@ -123,15 +130,12 @@ class AuthInterceptor extends Interceptor {
 
       await res.fold(
         (refreshErr) async {
-          log('Token refresh failed for $uuid — logging out');
-          tokenService.unsetAccountRefreshing(uuid);
+          log('Token refresh failed for $uuid — keeping account, surfacing error');
           completer.complete(false);
           _platformRefreshCompleters.remove(uuid);
-          await authRepo.removeAccount(account);
           handler.next(err);
         },
         (_) async {
-          tokenService.unsetAccountRefreshing(uuid);
           completer.complete(true);
           _platformRefreshCompleters.remove(uuid);
 
@@ -173,6 +177,7 @@ class AuthInterceptor extends Interceptor {
   ) async {
     try {
       requestOptions.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
+      requestOptions.extra[_retriedKey] = true;
       final response = await dio.fetch<dynamic>(requestOptions);
       handler.resolve(response);
     } on DioException catch (retryErr) {

@@ -27,8 +27,8 @@ class AddGitlabTokenAccountUsecase
       // store token and save to forkd storage as a forkd account
       final account = acc.getOrElse((e) => throw Exception('No account'));
 
-      await forkdAuthRepo.addAccount(account.$1, account.$2);
-      return right(null);
+      // Propagate the storage failure instead of reporting a fake success.
+      return await forkdAuthRepo.addAccount(account.$1, account.$2);
     } on Exception catch (e) {
       return left(e);
     }

@@ -5,24 +5,24 @@ import 'package:forkd/dependency_injection.dart';
 import 'package:forkd/features/auth/data/datasource/forkd_accounts.dart';
 import 'package:forkd/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:forkd/features/auth/presentation/views/login.dart';
-import 'package:forkd/features/dashboard/persentation/screens/home_screen.dart';
+import 'package:forkd/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
 Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
-  final isLogedIn = await di<ForkdAccountsDataSource>().isLogedIn;
+  final isLoggedIn = await di<ForkdAccountsDataSource>().isLoggedIn;
   final isGoingToLogin = state.matchedLocation == '/login';
   final isHandlingAuth = state.matchedLocation.startsWith('/auth');
 
   final logger = di<Logger>()
     ..d({
       'info': 'Auth Guard State Check',
-      'isLoggedIn': isLogedIn,
+      'isLoggedIn': isLoggedIn,
       'isGoingToLogin': isGoingToLogin,
       'isHandlingAuth': isHandlingAuth,
     });
 
-  if (!isLogedIn) {
+  if (!isLoggedIn) {
     if (isHandlingAuth) {
       logger.d(
         'User unauthenticated, but processing deep link. Allowing entry.',

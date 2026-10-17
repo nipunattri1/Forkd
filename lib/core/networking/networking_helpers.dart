@@ -1,11 +1,38 @@
 import 'package:dio/dio.dart';
-import 'package:forkd/core/networking/auth_interceptor.dart';
-import 'package:forkd/core/services/forkd_token.dart';
 import 'package:forkd/dependency_injection.dart';
-import 'package:forkd/features/auth/data/datasource/forkd_accounts.dart';
-import 'package:forkd/features/auth/domain/repositories/forkd_auth_repo.dart';
 
 class NetworkingHelpers {
+  /// Reads every page of a GitLab list endpoint by following `X-Next-Page`.
+  static Future<List<Map<String, dynamic>>> getAllPages(
+    Dio dio,
+    String path,
+    Map<String, dynamic> query,
+  ) async {
+    final items = <Map<String, dynamic>>[];
+    var page = 1;
+    while (true) {
+      final res = await dio.get<dynamic>(
+        path,
+        queryParameters: {...query, 'per_page': 10, 'page': page},
+      );
+      final status = res.statusCode ?? 0;
+      if (status >= 400) {
+        throw Exception('GitLab API error $status: ${res.data}');
+      }
+      final data = res.data;
+      if (data is! List) {
+        throw Exception('GitLab API error: unexpected response $data');
+      }
+      items.addAll(data.cast<Map<String, dynamic>>());
+
+      // Empty, same page or unparsable header means we are done.
+      final next = int.tryParse(res.headers.value('x-next-page') ?? '');
+      if (next == null || next <= page) break;
+      page = next;
+    }
+    return items;
+  }
+
   static void configureDio({required String domain}) {
     var formattedBaseUrl = domain.trim();
 
@@ -15,16 +42,7 @@ class NetworkingHelpers {
       formattedBaseUrl = 'https://$formattedBaseUrl';
     }
 
-    di<Dio>()
-      ..interceptors.add(
-        AuthInterceptor(
-          accountsService: di<ForkdAccountsDataSource>(),
-          tokenService: di<ForkdTokenService>(),
-          authRepo: di<ForkdAuthRepo>(),
-          dio: di<Dio>(),
-        ),
-      )
-      ..options = BaseOptions(
+    di<Dio>().options = BaseOptions(
         baseUrl: formattedBaseUrl,
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),

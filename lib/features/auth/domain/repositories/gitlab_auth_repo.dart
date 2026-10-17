@@ -9,5 +9,6 @@ abstract class GitlabAuthRepo {
   });
   Future<Either<Exception, (AccountEntity, TokenModel)>> loginWithOAuth({
     required String domain,
+    required String clientId,
   });
 }

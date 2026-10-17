@@ -1,1 +1,1 @@
-enum Platform { gitlab }
+enum Platform { gitlab, github, gitee }

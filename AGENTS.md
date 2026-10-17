@@ -21,9 +21,7 @@
 - `data/` — datasources, repository implementations, models.
 - `application/` — use cases (orchestrate domain).
 - `infrastructure/` — implementations / dev fakes.
-- `persentation/` — BLoC/Cubit, mappers, screens, widgets.
-
-Note: `persentation` is misspelled on purpose (existing convention — keep it).
+- `presentation/` — BLoC/Cubit, mappers, screens, widgets.
 
 ## 2. Build & Testing Commands
 

@@ -20,6 +20,7 @@ class AddAccountScreen extends StatefulWidget {
 class _AddAccountScreenState extends State<AddAccountScreen> {
   late TextEditingController _tokenController;
   late TextEditingController _domainController;
+  late TextEditingController _clientIdController;
   final ValueNotifier<bool> _isDomainExpanded = ValueNotifier(false);
 
   @override
@@ -27,12 +28,14 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
     super.initState();
     _tokenController = TextEditingController();
     _domainController = TextEditingController();
+    _clientIdController = TextEditingController();
   }
 
   @override
   void dispose() {
     _tokenController.dispose();
     _domainController.dispose();
+    _clientIdController.dispose();
     super.dispose();
   }
 
@@ -278,6 +281,22 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 12),
+                        ForkdTextField(
+                          hintText: 'OAuth Client ID',
+                          prefixIcon: Symbols.key_rounded,
+                          controller: _clientIdController,
+                        ),
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Text(
+                            'Application ID from your GitLab instance (OAuth)',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 8),
                       ],
                     ),
@@ -287,10 +306,27 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
+                        final domain = _domainController.text.trim().isEmpty
+                            ? 'gitlab.com'
+                            : _sanitizeDomain(_domainController.text);
+                        final clientId = _clientIdController.text.trim();
+                        final error = _validateDomain(_domainController.text) ??
+                            (domain != 'gitlab.com' && clientId.isEmpty
+                                ? 'Client ID is required for a custom domain'
+                                : null);
+                        if (error != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(error)),
+                          );
+                          return;
+                        }
                         Navigator.of(dialogCtx).pop();
                         authBloc.add(
-                          const AuthEvent.addGitlabOAuthAccount(
-                            domain: 'gitlab.com',
+                          AuthEvent.addGitlabOAuthAccount(
+                            domain: domain,
+                            clientId: clientId.isEmpty
+                                ? gitlabClientId
+                                : clientId,
                           ),
                         );
                       },
@@ -330,6 +366,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
     ).whenComplete(() {
       _tokenController.clear();
       _domainController.clear();
+      _clientIdController.clear();
     });
   }
 }

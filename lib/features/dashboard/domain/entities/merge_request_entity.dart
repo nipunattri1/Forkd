@@ -26,8 +26,6 @@ class MergeRequestEntity {
     required this.targetBranch,
     required this.pipeline,
     required this.comments,
-    required this.approvals,
-    required this.approvalsRequired,
     this.labels = const [],
   });
 
@@ -39,9 +37,5 @@ class MergeRequestEntity {
   final String targetBranch;
   final PipelineStatus pipeline;
   final int comments;
-  final int approvals;
-  final int approvalsRequired;
   final List<MrLabelEntity> labels;
-
-  bool get isApproved => approvals >= approvalsRequired;
 }

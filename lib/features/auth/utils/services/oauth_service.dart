@@ -23,11 +23,13 @@ class OauthService {
 
   Future<Either<AppError, (AccountEntity, TokenModel)>> call(
     String domain, {
+    required String clientId,
     required Future<(AccountEntity, TokenModel)> Function({
       required String domain,
       required String code,
       required String codeVerifier,
       required String redirectUri,
+      required String clientId,
     })
     onCodeRecived,
   }) async {
@@ -50,11 +52,11 @@ class OauthService {
 
     final uri = Uri.parse(
       'https://$domain$gitlabOAuthPath'
-      '?client_id=$gitlabClientId'
+      '?client_id=$clientId'
       '&redirect_uri=$redirectUri'
       '&response_type=code'
       '&state=$localOAuthState'
-      '&scope=read_user+read_api'
+      '&scope=read_user+api'
       '&code_challenge=$codeChallenge'
       '&code_challenge_method=S256',
     );
@@ -122,6 +124,7 @@ class OauthService {
       codeVerifier: codeVerifier,
       domain: domain,
       redirectUri: redirectUri,
+      clientId: clientId,
     );
 
     _logger.i('OAuth flow completely executed successfully.');

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forkd/core/common/strings.dart';
 import 'package:forkd/core/networking/networking_helpers.dart';
 import 'package:forkd/dependency_injection.dart';
 import 'package:forkd/features/auth/domain/entities/account_entity.dart';
@@ -50,21 +51,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _AddGithubAccountEvent event,
     Emitter<AuthState> emit,
   ) async {
-    logger.e('Trying an Unimplemented method');
-    throw UnimplementedError();
-    // emit(AuthState.loading());
-    // final res = await addGithubAccountUseCase(NoParams());
-    // res.match((_) => emit(AuthState.error(error: "Couldn't add Account")), (
-    //   _,
-    // ) async {
-    //   final result = await hydrateAuthUseCase();
-    //   emit(
-    //     AuthState.data(
-    //       accounts: result.accounts,
-    //       activeAccount: result.activeAccount,
-    //     ),
-    //   );
-    // });
+    // GitHub login is not implemented yet; keep the handler non-fatal.
+    logger.e('GitHub account login is not implemented yet');
+    emit(const AuthState.error(error: "GitHub login isn't supported yet"));
   }
 
   Future<void> _removeForkdAccount(
@@ -96,10 +85,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     di<Logger>().d('hyrating');
     final result = await hydrateAuthUseCase.call();
-    // Uri.https(result.activeAccount?.domain ?? '').;
-    NetworkingHelpers.configureDio(
-      domain: 'https://${result.activeAccount?.domain}',
-    );
+    final activeAccount = result.activeAccount;
+    if (activeAccount != null) {
+      NetworkingHelpers.configureDio(domain: activeAccount.domain);
+    }
 
     logger.d({
       'info': 'Hyadrating the App with data',
@@ -119,12 +108,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     final res = await addGitlabOAuthAccountUseCase(
-      AddGitlabOAuthAccountParams(domain: event.domain),
+      AddGitlabOAuthAccountParams(
+        domain: event.domain,
+        clientId: event.clientId,
+      ),
     );
     await res.fold(
       (e) async {
         logger.e({'info': 'gitlab OAuth failed with error'}, error: e);
-        emit(const AuthState.error(error: "Couldn't add Account"));
+        emit(AuthState.error(error: e.toString()));
       },
       (_) async {
         final result = await hydrateAuthUseCase.call();

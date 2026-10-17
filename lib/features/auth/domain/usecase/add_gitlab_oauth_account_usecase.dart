@@ -1,4 +1,5 @@
 // import 'package:forkd/features/auth/data/datasource/forkd_accounts.dart';
+import 'package:forkd/core/common/strings.dart';
 import 'package:forkd/core/usecase/usecase.dart';
 import 'package:forkd/features/auth/domain/repositories/forkd_auth_repo.dart';
 import 'package:forkd/features/auth/domain/repositories/gitlab_auth_repo.dart';
@@ -6,8 +7,12 @@ import 'package:fpdart/fpdart.dart';
 import 'package:logger/logger.dart';
 
 class AddGitlabOAuthAccountParams {
-  const AddGitlabOAuthAccountParams({this.domain = 'gitlab.com'});
+  const AddGitlabOAuthAccountParams({
+    this.domain = 'gitlab.com',
+    this.clientId = gitlabClientId,
+  });
   final String domain;
+  final String clientId;
 }
 
 class AddGitlabOAuthAccountUseCase
@@ -26,7 +31,10 @@ class AddGitlabOAuthAccountUseCase
     AddGitlabOAuthAccountParams params,
   ) async {
     try {
-      final res = await gitlabAuthRepo.loginWithOAuth(domain: params.domain);
+      final res = await gitlabAuthRepo.loginWithOAuth(
+        domain: params.domain,
+        clientId: params.clientId,
+      );
       if (res.isLeft()) return res;
 
       final (account, token) = res.getOrElse(

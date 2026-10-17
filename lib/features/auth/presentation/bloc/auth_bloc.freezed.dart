@@ -138,11 +138,11 @@ return setActiveAccount(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  addGithubOAuthAccount,TResult Function( String domain)?  addGitlabOAuthAccount,TResult Function( String token,  String domain)?  addGitlabTokenAccount,TResult Function()?  hydrate,TResult Function( AccountEntity account)?  removeforkdAccount,TResult Function( AccountEntity account)?  setActiveAccount,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  addGithubOAuthAccount,TResult Function( String domain,  String clientId)?  addGitlabOAuthAccount,TResult Function( String token,  String domain)?  addGitlabTokenAccount,TResult Function()?  hydrate,TResult Function( AccountEntity account)?  removeforkdAccount,TResult Function( AccountEntity account)?  setActiveAccount,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AddGithubAccountEvent() when addGithubOAuthAccount != null:
 return addGithubOAuthAccount();case _AddGitlabOAuthAccountEvent() when addGitlabOAuthAccount != null:
-return addGitlabOAuthAccount(_that.domain);case _AddGitlabTokenAccountEvent() when addGitlabTokenAccount != null:
+return addGitlabOAuthAccount(_that.domain,_that.clientId);case _AddGitlabTokenAccountEvent() when addGitlabTokenAccount != null:
 return addGitlabTokenAccount(_that.token,_that.domain);case _HydarateAuth() when hydrate != null:
 return hydrate();case _RemoveForkdAccountEvent() when removeforkdAccount != null:
 return removeforkdAccount(_that.account);case _SetActiveAccountEvent() when setActiveAccount != null:
@@ -164,11 +164,11 @@ return setActiveAccount(_that.account);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  addGithubOAuthAccount,required TResult Function( String domain)  addGitlabOAuthAccount,required TResult Function( String token,  String domain)  addGitlabTokenAccount,required TResult Function()  hydrate,required TResult Function( AccountEntity account)  removeforkdAccount,required TResult Function( AccountEntity account)  setActiveAccount,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  addGithubOAuthAccount,required TResult Function( String domain,  String clientId)  addGitlabOAuthAccount,required TResult Function( String token,  String domain)  addGitlabTokenAccount,required TResult Function()  hydrate,required TResult Function( AccountEntity account)  removeforkdAccount,required TResult Function( AccountEntity account)  setActiveAccount,}) {final _that = this;
 switch (_that) {
 case _AddGithubAccountEvent():
 return addGithubOAuthAccount();case _AddGitlabOAuthAccountEvent():
-return addGitlabOAuthAccount(_that.domain);case _AddGitlabTokenAccountEvent():
+return addGitlabOAuthAccount(_that.domain,_that.clientId);case _AddGitlabTokenAccountEvent():
 return addGitlabTokenAccount(_that.token,_that.domain);case _HydarateAuth():
 return hydrate();case _RemoveForkdAccountEvent():
 return removeforkdAccount(_that.account);case _SetActiveAccountEvent():
@@ -186,11 +186,11 @@ return setActiveAccount(_that.account);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  addGithubOAuthAccount,TResult? Function( String domain)?  addGitlabOAuthAccount,TResult? Function( String token,  String domain)?  addGitlabTokenAccount,TResult? Function()?  hydrate,TResult? Function( AccountEntity account)?  removeforkdAccount,TResult? Function( AccountEntity account)?  setActiveAccount,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  addGithubOAuthAccount,TResult? Function( String domain,  String clientId)?  addGitlabOAuthAccount,TResult? Function( String token,  String domain)?  addGitlabTokenAccount,TResult? Function()?  hydrate,TResult? Function( AccountEntity account)?  removeforkdAccount,TResult? Function( AccountEntity account)?  setActiveAccount,}) {final _that = this;
 switch (_that) {
 case _AddGithubAccountEvent() when addGithubOAuthAccount != null:
 return addGithubOAuthAccount();case _AddGitlabOAuthAccountEvent() when addGitlabOAuthAccount != null:
-return addGitlabOAuthAccount(_that.domain);case _AddGitlabTokenAccountEvent() when addGitlabTokenAccount != null:
+return addGitlabOAuthAccount(_that.domain,_that.clientId);case _AddGitlabTokenAccountEvent() when addGitlabTokenAccount != null:
 return addGitlabTokenAccount(_that.token,_that.domain);case _HydarateAuth() when hydrate != null:
 return hydrate();case _RemoveForkdAccountEvent() when removeforkdAccount != null:
 return removeforkdAccount(_that.account);case _SetActiveAccountEvent() when setActiveAccount != null:
@@ -244,10 +244,11 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 
 
 class _AddGitlabOAuthAccountEvent with DiagnosticableTreeMixin implements AuthEvent {
-  const _AddGitlabOAuthAccountEvent({required this.domain});
+  const _AddGitlabOAuthAccountEvent({required this.domain, this.clientId = gitlabClientId});
   
 
  final  String domain;
+@JsonKey() final  String clientId;
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -260,23 +261,23 @@ _$AddGitlabOAuthAccountEventCopyWith<_AddGitlabOAuthAccountEvent> get copyWith =
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
     ..add(DiagnosticsProperty('type', 'AuthEvent.addGitlabOAuthAccount'))
-    ..add(DiagnosticsProperty('domain', domain));
+    ..add(DiagnosticsProperty('domain', domain))..add(DiagnosticsProperty('clientId', clientId));
 }
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddGitlabOAuthAccountEvent&&(identical(other.domain, domain) || other.domain == domain));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddGitlabOAuthAccountEvent&&(identical(other.domain, domain) || other.domain == domain)&&(identical(other.clientId, clientId) || other.clientId == clientId));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,domain);
+    return Object.hash(runtimeType,domain,clientId);
 }
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-    return 'AuthEvent.addGitlabOAuthAccount(domain: $domain)';
+    return 'AuthEvent.addGitlabOAuthAccount(domain: $domain, clientId: $clientId)';
 }
 
 
@@ -287,7 +288,7 @@ abstract mixin class _$AddGitlabOAuthAccountEventCopyWith<$Res> implements $Auth
   factory _$AddGitlabOAuthAccountEventCopyWith(_AddGitlabOAuthAccountEvent value, $Res Function(_AddGitlabOAuthAccountEvent) _then) = __$AddGitlabOAuthAccountEventCopyWithImpl;
 @useResult
 $Res call({
- String domain
+ String domain, String clientId
 });
 
 
@@ -304,9 +305,10 @@ class __$AddGitlabOAuthAccountEventCopyWithImpl<$Res>
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? domain = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? domain = null,Object? clientId = null,}) {
   return _then(_AddGitlabOAuthAccountEvent(
 domain: null == domain ? _self.domain : domain // ignore: cast_nullable_to_non_nullable
+as String,clientId: null == clientId ? _self.clientId : clientId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

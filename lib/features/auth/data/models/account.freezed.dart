@@ -20,6 +20,10 @@ AccountModel _$AccountModelFromJson(
           return GithubAccModel.fromJson(
             json
           );
+                case 'gitee':
+          return GiteeAccModel.fromJson(
+            json
+          );
                 case 'gitlab':
           return GitlabAccModel.fromJson(
             json
@@ -120,11 +124,12 @@ extension AccountModelPatterns on AccountModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( GithubAccModel value)?  github,TResult Function( GitlabAccModel value)?  gitlab,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( GithubAccModel value)?  github,TResult Function( GiteeAccModel value)?  gitee,TResult Function( GitlabAccModel value)?  gitlab,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case GithubAccModel() when github != null:
-return github(_that);case GitlabAccModel() when gitlab != null:
+return github(_that);case GiteeAccModel() when gitee != null:
+return gitee(_that);case GitlabAccModel() when gitlab != null:
 return gitlab(_that);case _:
   return orElse();
 
@@ -143,11 +148,12 @@ return gitlab(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( GithubAccModel value)  github,required TResult Function( GitlabAccModel value)  gitlab,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( GithubAccModel value)  github,required TResult Function( GiteeAccModel value)  gitee,required TResult Function( GitlabAccModel value)  gitlab,}){
 final _that = this;
 switch (_that) {
 case GithubAccModel():
-return github(_that);case GitlabAccModel():
+return github(_that);case GiteeAccModel():
+return gitee(_that);case GitlabAccModel():
 return gitlab(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -162,11 +168,12 @@ return gitlab(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( GithubAccModel value)?  github,TResult? Function( GitlabAccModel value)?  gitlab,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( GithubAccModel value)?  github,TResult? Function( GiteeAccModel value)?  gitee,TResult? Function( GitlabAccModel value)?  gitlab,}){
 final _that = this;
 switch (_that) {
 case GithubAccModel() when github != null:
-return github(_that);case GitlabAccModel() when gitlab != null:
+return github(_that);case GiteeAccModel() when gitee != null:
+return gitee(_that);case GitlabAccModel() when gitlab != null:
 return gitlab(_that);case _:
   return null;
 
@@ -184,11 +191,12 @@ return gitlab(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String tokenHash,  String login,  String avatarUrl,  String domain)?  github,TResult Function( String tokenHash,  String username,  String name,  String avatarUrl,  String bio,  int gitlabId,  int? accessLevel,  String domain)?  gitlab,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String tokenHash,  String login,  String avatarUrl,  String domain)?  github,TResult Function( String tokenHash,  String login,  String avatarUrl,  String domain)?  gitee,TResult Function( String tokenHash,  String username,  String name,  String avatarUrl,  String bio,  int gitlabId,  int? accessLevel,  String domain,  String clientId)?  gitlab,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case GithubAccModel() when github != null:
-return github(_that.tokenHash,_that.login,_that.avatarUrl,_that.domain);case GitlabAccModel() when gitlab != null:
-return gitlab(_that.tokenHash,_that.username,_that.name,_that.avatarUrl,_that.bio,_that.gitlabId,_that.accessLevel,_that.domain);case _:
+return github(_that.tokenHash,_that.login,_that.avatarUrl,_that.domain);case GiteeAccModel() when gitee != null:
+return gitee(_that.tokenHash,_that.login,_that.avatarUrl,_that.domain);case GitlabAccModel() when gitlab != null:
+return gitlab(_that.tokenHash,_that.username,_that.name,_that.avatarUrl,_that.bio,_that.gitlabId,_that.accessLevel,_that.domain,_that.clientId);case _:
   return orElse();
 
 }
@@ -206,11 +214,12 @@ return gitlab(_that.tokenHash,_that.username,_that.name,_that.avatarUrl,_that.bi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String tokenHash,  String login,  String avatarUrl,  String domain)  github,required TResult Function( String tokenHash,  String username,  String name,  String avatarUrl,  String bio,  int gitlabId,  int? accessLevel,  String domain)  gitlab,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String tokenHash,  String login,  String avatarUrl,  String domain)  github,required TResult Function( String tokenHash,  String login,  String avatarUrl,  String domain)  gitee,required TResult Function( String tokenHash,  String username,  String name,  String avatarUrl,  String bio,  int gitlabId,  int? accessLevel,  String domain,  String clientId)  gitlab,}) {final _that = this;
 switch (_that) {
 case GithubAccModel():
-return github(_that.tokenHash,_that.login,_that.avatarUrl,_that.domain);case GitlabAccModel():
-return gitlab(_that.tokenHash,_that.username,_that.name,_that.avatarUrl,_that.bio,_that.gitlabId,_that.accessLevel,_that.domain);}
+return github(_that.tokenHash,_that.login,_that.avatarUrl,_that.domain);case GiteeAccModel():
+return gitee(_that.tokenHash,_that.login,_that.avatarUrl,_that.domain);case GitlabAccModel():
+return gitlab(_that.tokenHash,_that.username,_that.name,_that.avatarUrl,_that.bio,_that.gitlabId,_that.accessLevel,_that.domain,_that.clientId);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -224,11 +233,12 @@ return gitlab(_that.tokenHash,_that.username,_that.name,_that.avatarUrl,_that.bi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String tokenHash,  String login,  String avatarUrl,  String domain)?  github,TResult? Function( String tokenHash,  String username,  String name,  String avatarUrl,  String bio,  int gitlabId,  int? accessLevel,  String domain)?  gitlab,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String tokenHash,  String login,  String avatarUrl,  String domain)?  github,TResult? Function( String tokenHash,  String login,  String avatarUrl,  String domain)?  gitee,TResult? Function( String tokenHash,  String username,  String name,  String avatarUrl,  String bio,  int gitlabId,  int? accessLevel,  String domain,  String clientId)?  gitlab,}) {final _that = this;
 switch (_that) {
 case GithubAccModel() when github != null:
-return github(_that.tokenHash,_that.login,_that.avatarUrl,_that.domain);case GitlabAccModel() when gitlab != null:
-return gitlab(_that.tokenHash,_that.username,_that.name,_that.avatarUrl,_that.bio,_that.gitlabId,_that.accessLevel,_that.domain);case _:
+return github(_that.tokenHash,_that.login,_that.avatarUrl,_that.domain);case GiteeAccModel() when gitee != null:
+return gitee(_that.tokenHash,_that.login,_that.avatarUrl,_that.domain);case GitlabAccModel() when gitlab != null:
+return gitlab(_that.tokenHash,_that.username,_that.name,_that.avatarUrl,_that.bio,_that.gitlabId,_that.accessLevel,_that.domain,_that.clientId);case _:
   return null;
 
 }
@@ -320,8 +330,89 @@ as String,
 /// @nodoc
 @JsonSerializable()
 
+class GiteeAccModel extends AccountModel {
+   GiteeAccModel({required this.tokenHash, required this.login, required this.avatarUrl, this.domain = 'gitee.com',  String? $type}): $type = $type ?? 'gitee',super._();
+  factory GiteeAccModel.fromJson(Map<String, dynamic> json) => _$GiteeAccModelFromJson(json);
+
+@override final  String tokenHash;
+ final  String login;
+@override final  String avatarUrl;
+@override@JsonKey() final  String domain;
+
+@JsonKey(name: 'runtimeType')
+final String $type;
+
+
+/// Create a copy of AccountModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GiteeAccModelCopyWith<GiteeAccModel> get copyWith => _$GiteeAccModelCopyWithImpl<GiteeAccModel>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$GiteeAccModelToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is GiteeAccModel&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.login, login) || other.login == login)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.domain, domain) || other.domain == domain));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hash(runtimeType,tokenHash,login,avatarUrl,domain);
+}
+
+@override
+String toString() {
+    return 'AccountModel.gitee(tokenHash: $tokenHash, login: $login, avatarUrl: $avatarUrl, domain: $domain)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GiteeAccModelCopyWith<$Res> implements $AccountModelCopyWith<$Res> {
+  factory $GiteeAccModelCopyWith(GiteeAccModel value, $Res Function(GiteeAccModel) _then) = _$GiteeAccModelCopyWithImpl;
+@override @useResult
+$Res call({
+ String tokenHash, String login, String avatarUrl, String domain
+});
+
+
+
+
+}
+/// @nodoc
+class _$GiteeAccModelCopyWithImpl<$Res>
+    implements $GiteeAccModelCopyWith<$Res> {
+  _$GiteeAccModelCopyWithImpl(this._self, this._then);
+
+  final GiteeAccModel _self;
+  final $Res Function(GiteeAccModel) _then;
+
+/// Create a copy of AccountModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? tokenHash = null,Object? login = null,Object? avatarUrl = null,Object? domain = null,}) {
+  return _then(GiteeAccModel(
+tokenHash: null == tokenHash ? _self.tokenHash : tokenHash // ignore: cast_nullable_to_non_nullable
+as String,login: null == login ? _self.login : login // ignore: cast_nullable_to_non_nullable
+as String,avatarUrl: null == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String,domain: null == domain ? _self.domain : domain // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
 class GitlabAccModel extends AccountModel {
-   GitlabAccModel({required this.tokenHash, required this.username, required this.name, required this.avatarUrl, required this.bio, required this.gitlabId, required this.accessLevel, this.domain = 'gitlab.com',  String? $type}): $type = $type ?? 'gitlab',super._();
+   GitlabAccModel({required this.tokenHash, required this.username, required this.name, required this.avatarUrl, required this.bio, required this.gitlabId, required this.accessLevel, this.domain = 'gitlab.com', this.clientId = gitlabClientId,  String? $type}): $type = $type ?? 'gitlab',super._();
   factory GitlabAccModel.fromJson(Map<String, dynamic> json) => _$GitlabAccModelFromJson(json);
 
 @override final  String tokenHash;
@@ -332,6 +423,7 @@ class GitlabAccModel extends AccountModel {
  final  int gitlabId;
  final  int? accessLevel;
 @override@JsonKey() final  String domain;
+@JsonKey() final  String clientId;
 
 @JsonKey(name: 'runtimeType')
 final String $type;
@@ -350,18 +442,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is GitlabAccModel&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.username, username) || other.username == username)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.gitlabId, gitlabId) || other.gitlabId == gitlabId)&&(identical(other.accessLevel, accessLevel) || other.accessLevel == accessLevel)&&(identical(other.domain, domain) || other.domain == domain));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is GitlabAccModel&&(identical(other.tokenHash, tokenHash) || other.tokenHash == tokenHash)&&(identical(other.username, username) || other.username == username)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.gitlabId, gitlabId) || other.gitlabId == gitlabId)&&(identical(other.accessLevel, accessLevel) || other.accessLevel == accessLevel)&&(identical(other.domain, domain) || other.domain == domain)&&(identical(other.clientId, clientId) || other.clientId == clientId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,tokenHash,username,name,avatarUrl,bio,gitlabId,accessLevel,domain);
+    return Object.hash(runtimeType,tokenHash,username,name,avatarUrl,bio,gitlabId,accessLevel,domain,clientId);
 }
 
 @override
 String toString() {
-    return 'AccountModel.gitlab(tokenHash: $tokenHash, username: $username, name: $name, avatarUrl: $avatarUrl, bio: $bio, gitlabId: $gitlabId, accessLevel: $accessLevel, domain: $domain)';
+    return 'AccountModel.gitlab(tokenHash: $tokenHash, username: $username, name: $name, avatarUrl: $avatarUrl, bio: $bio, gitlabId: $gitlabId, accessLevel: $accessLevel, domain: $domain, clientId: $clientId)';
 }
 
 
@@ -372,7 +464,7 @@ abstract mixin class $GitlabAccModelCopyWith<$Res> implements $AccountModelCopyW
   factory $GitlabAccModelCopyWith(GitlabAccModel value, $Res Function(GitlabAccModel) _then) = _$GitlabAccModelCopyWithImpl;
 @override @useResult
 $Res call({
- String tokenHash, String username, String name, String avatarUrl, String bio, int gitlabId, int? accessLevel, String domain
+ String tokenHash, String username, String name, String avatarUrl, String bio, int gitlabId, int? accessLevel, String domain, String clientId
 });
 
 
@@ -389,7 +481,7 @@ class _$GitlabAccModelCopyWithImpl<$Res>
 
 /// Create a copy of AccountModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? tokenHash = null,Object? username = null,Object? name = null,Object? avatarUrl = null,Object? bio = null,Object? gitlabId = null,Object? accessLevel = freezed,Object? domain = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? tokenHash = null,Object? username = null,Object? name = null,Object? avatarUrl = null,Object? bio = null,Object? gitlabId = null,Object? accessLevel = freezed,Object? domain = null,Object? clientId = null,}) {
   return _then(GitlabAccModel(
 tokenHash: null == tokenHash ? _self.tokenHash : tokenHash // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -399,6 +491,7 @@ as String,bio: null == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nul
 as String,gitlabId: null == gitlabId ? _self.gitlabId : gitlabId // ignore: cast_nullable_to_non_nullable
 as int,accessLevel: freezed == accessLevel ? _self.accessLevel : accessLevel // ignore: cast_nullable_to_non_nullable
 as int?,domain: null == domain ? _self.domain : domain // ignore: cast_nullable_to_non_nullable
+as String,clientId: null == clientId ? _self.clientId : clientId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

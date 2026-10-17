@@ -1,0 +1,26 @@
+# Plan: forkd — dashboard pending work
+
+Repo: /home/bubble/work/forkd
+Scope: `lib/features/dashboard/` only (auth already implemented end-to-end).
+Load: single user, single device, one process.
+
+## Pending (dashboard)
+
+1. **Real GitLab backend** — `lib/features/dashboard/infrastructure/repositories/fake_merge_request_repository.dart` returns hardcoded Figma sample data with a `TODO(bubble): replace with a GitLab-backed implementation.` Wire `MergeRequestRepository` to the real GitLab API (merge requests endpoint) using the active account's token via `Dio`/`AuthInterceptor`.
+
+2. **Empty bottom-nav tabs** — `lib/features/dashboard/persentation/screens/home_screen.dart:29-34`: Projects, Explore, and You are `ForkdScaffold(body: Container())` stubs. Decide whether to implement or remove.
+
+3. **Unimplemented tab contents** — `home_screen.dart:274-279` lists To-Do, Merge requests, Issues, Pipelines, but only the merge-requests list renders. To-Do/Issues/Pipelines have no data or UI.
+
+4. **Dead-end header actions** — `home_screen.dart:91-104` pushes `/gitlab/search`, `/gitlab/todos`, `/settings`; `router.dart` only defines `/`, `/login`, `/auth/gitlab`. Add routes or remove the actions.
+
+5. **No-op interactions** — `MergeRequestTile.onTap` is `() {}` (`merge_request_tile.dart:117`); `showMergeRequestFilterSheet` dispatches `filterChanged` but the fake repo ignores the filter (`merge_request_filter_sheet.dart:18`). Filtering does nothing today.
+
+6. **Auth dependency without API** — dashboard is gated behind auth (`router.dart:12-44`) but there is no real GitLab call for merge requests, so a logged-in user only sees sample data.
+
+## Not dashboard (for context, not in scope here)
+- Auth: GitHub flow throws `UnimplementedError` (commented out everywhere).
+- `AuthInterceptor` re-registered on every account switch (duplicate interceptors).
+- On refresh failure the interceptor deletes the account.
+- No tests exist (`test/` dir missing).
+- `locale.dart` (598 lines) and `graphql.dart` (`@Deprecated`) are dead code.

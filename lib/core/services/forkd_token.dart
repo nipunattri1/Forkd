@@ -65,16 +65,6 @@ class ForkdTokenService {
     return Either.right(null);
   }
 
-  final Map<String, bool> _isRefrshing = {};
-
-  bool isAccountRefreshing(String platform) {
-    return _isRefrshing[platform] ?? false;
-  }
-
-  void setAccountRefreshing(String uuid) => _isRefrshing[uuid] = true;
-
-  void unsetAccountRefreshing(String uuid) => _isRefrshing[uuid] = false;
-
   /// Fetches new token for the platform,
   /// takes [AccountEntity] and [TokenModel].
   /// function starts a new isolate to do so;
@@ -99,12 +89,21 @@ class ForkdTokenService {
     try {
       switch (account.platform) {
         case Platform.gitlab:
+          final clientId = switch (account) {
+            GitlabAccountEntity(:final clientId) => clientId,
+            _ => gitlabClientId,
+          };
           final newToken = await _refreshGitlabToken(
             account.domain,
             token.refreshToken!,
+            clientId,
           );
           await addToken(newToken, useHash: account.tokenHash);
           return right(newToken);
+        case Platform.github:
+        case Platform.gitee:
+          // TODO(nipunattri1): implement token refresh for GitHub/Gitee platforms.
+          return left(NetworkError.noRefreshToken());
       }
     } on Exception catch (e) {
       return left(NetworkError.unknown(e));
@@ -112,14 +111,18 @@ class ForkdTokenService {
   }
 
   // TODO(nipunattri1): switch to dio
-  Future<TokenModel> _refreshGitlabToken(String domain, String token) async {
+  Future<TokenModel> _refreshGitlabToken(
+    String domain,
+    String token,
+    String clientId,
+  ) async {
     final domainlocal = domain.trim();
 
     final tokenUri = Uri.https(domainlocal, '/oauth/token');
     const redirectUri = '$appUriScheme://$appUriBase/auth/gitlab';
 
     final body = {
-      'client_id': gitlabClientId,
+      'client_id': clientId,
       'grant_type': 'refresh_token',
       'redirect_uri': redirectUri,
       'refresh_token': token,

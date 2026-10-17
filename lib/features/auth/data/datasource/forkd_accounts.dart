@@ -186,7 +186,7 @@ class ForkdAccountsDataSource {
     }
   }
 
-  Future<bool> get isLogedIn async {
+  Future<bool> get isLoggedIn async {
     final list = await getallAccounts;
     final logStatus = list.isNotEmpty;
     _logger.t(
